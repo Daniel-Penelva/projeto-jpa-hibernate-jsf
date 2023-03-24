@@ -1,0 +1,156 @@
+Link do Projeto:
+http://localhost:8080/projeto-jpa-hibernate-jsf/index.jsf
+
+JSF é um MVC (MODEL-VIEW-CONTROLLER)
+
+
+
+                             CONTROLLER            VIEW                                MODEL
+                          
+ CLIENTES -------------->  (Manager Beans)  +  (Páginas JSF) --------------> (entidades e regras de negócio)
+          <-------------   (Faces Servlet)       (XHTML)     <-------------
+
+O Controller intercepta os dados da tela que é jogado no Model. Ele também buscas os dados que estão no Model que é jogado para a View (tela).
+
+
+Principais Componentes do JSF - SITE: https://www.tutorialspoint.com/jsf/index.htm
+
+ShowCase Primefaces - SITE: https://www.primefaces.org/showcase/index.xhtml?jfwid=1aeba
+
+Site oficial javaserverfaces - SITE: https://javaee.github.io/javaserverfaces-spec/
+
+Bibliotecas de terceiros que trabalham com JSF - SITE: http://icefaces-showcase.icesoft.org/showcase.jsf
+                                                 SITE: http://showcase.richfaces.org/
+
+
+< Aula 24.11 - Ensina a configurar o ambiente e a criar o primeiro projeto jsf >
+< Aula 24.17 - Ensina a corrigir erros de biblioteca e de java compiler (em relação ao jdk) >
+
+O projeto Maven criado talvez não apareça para o servidor tomcat, o que signfica que o seu projeto não é um projeto web. Logo,temos que 
+tornar esse projeto como web. E como fazer isso?
+
+Clica no projeto e com o botão direito do mouse > properties > Projects Facets > Clica em "Convert to faceted form..." > Habilitar 'Dynamic Web Module', 'Javascript, 'JavaServer Faces' e 'JPA' > apply
+Clica no projeto e com o botão direito do mouse > properties > Projects Facets > na aba 'Runtimes' define o tomcat que vai ser utilizado > apply
+OBS. Se aparecer um "x em vermelho" clica nesse x e em 'JPA implemention' escolhe o type 'Disable Library Configuration' > next > marca o 'Generate web.xml deployment descriptor' > next > ok
+
+OBS. No eclipse a aba 'Markers' foi mostrado erro de java compiler, ou seja, era um erro de jdk que não estava compativel com o projeto. No caso, alterei 
+para o JDK que estou usando nos projetos.
+
+------------------------------------------------------------------------
+
+Entendendo o ManagedBean JSF
+
+    Front-end            ------------->  Back-end
+   (Página JSF - XHTML)  <-------------  (ManagedBean - Controlador)
+   
+
+O JSF terá a página de view (tela) que vai ser criada com um conjunto de tags especiais que vai ser comunicar com o servlet.
+ 
+Vai ser preciso criar os managedbean que é um objeto controlado pelo JSF que por conseqüência vai saber como se comunicar 
+com o Servlet e com as tags especiais vinda da tela, ou seja, o managedbean ao ser criado vai ser o responsável por controlar
+a página. Lembrando que ele vai ser o back-end  que são os eventos da página (por exemplo, um evento de cadastro). 
+Portanto, primeiro lá no Servlet vai ter a anotação “@Controller” onde vai ser possível fazer a instância do objeto que vai
+cumprir com o papel de intermediador do managedbean e com o framework Spring.
+
+Vale ressaltar, que a primeiro momento ele vai trabahar com o JSF, logo ele usará a anotação “@ManagedBean” para 
+capturar os dados da tela no momento que o usuário executar o botão, esses dados referente ao usuário vão ser capturados 
+pelo servlet e vai passar para o seu “@ManagedBean”, logo todos os dados que estavam na tela vão ser armazenados num objeto
+da entidade (camada model), onde vai ser setado por ele todos os dados. 
+
+OBS. No arquivo web.xml na pasta WEB-INF, a tag servlet-class é onde está a classe principal do funcionamento do JSF.
+OBS. E a tag url-pattern é onde define os mapeamentos da url(s).
+
+Ao criar a página XHTML vai ser preciso adicionar a anotação do JSF na página. E vai ser usado como referencia a letra h 
+para o namespace. EX: xmlns:h="http://java.sun.com/jsf/html". 
+Esse xml namespace vai ser puxado do próprio framework onde estão as bibliotecas (dependencias) baixadas no Maven do seu projeto.
+
+Link do Projeto:
+http://localhost:8080/projeto-jpa-hibernate-jsf/
+http://localhost:8080/projeto-jpa-hibernate-jsf/index.jsf
+
+----------------------------------------------
+
+Escopos do Maneged Beans
+
+Quando referenciamos um maneged bean via EL, o framework do JSF instanciará um objeto de classe do manede bean, o 
+recuperará uma instância existente. Todas as instâncias possuem um tempo de vida, que é definido dependendo do escopo
+usado no maneged bean.
+
+Os escopos de maneged beans JSF podem ser definidos através de anotações do pacote javax.faces.bean.
+
+Objetivo: Define comportamentos para telas e sistemas e cada escopo resolve um tipo de problema e cada um tem sua 
+função específica.
+
+-----------------------------------------------
+
+Principais Escopos:
+
+@NoneScoped
+O bean será instanciado a cada vez que for referenciado.
+
+@RequestScope (padrão)
+Tem vida curta, começando quando é referenciado em uma única requisição HTTP e terminando quando a resposta é 
+enviada de volta ao cliente.
+
+@ViewScope 
+A instância permanece ativa até que o usário navegue para uma próxima página.
+
+@SessionScoped
+Mantém a instância durante diversas requisições e até mesmo navegações entre páginas, até que a sessão do 
+usuário seja invalidada ou o tempo limite é atingido. Cada usuário possui uma sessão de navegação, portanto, os 
+objetos não são compartilhados entre os usuários.
+
+@ApplicationScoped
+Mantém a instância durante todo o tempo de execução da aplicação. É um escopo que compartilha os objetos para 
+todos os usuários do sistema.
+
+---------------------------------
+
+Bom saber sobre Request Scoped: 
+Em relação ao Request Scoped, ao clicar no botão 'adicionar nome', ele chama uma requisição, no caso, o método 
+addNome e adiciona o nome na lista e quando o servidor dá a resposta para o navegador o bean Pessoa (pessoaBean) 
+que estava na memória morre (portanto, ao gerar uma requisição ele processo o maneged bean, devolve a resposta, e morre), 
+ou seja, tudo que estiver dentro dele vai morrer também, no caso, o usuário adicionado a lista. Por esse motivo que
+não é possível usar o request Scoped numa lista já que sempre que for adicionado um usuário ele morre e não vai ser 
+possível adicionar outro usuário. Portanto, o Request Scoped só é recomendado usar num cadastro, ou seja, capturou
+os dados da tela de cadastro, salvou no banco de dados e por fim morreu.
+
+---------------------------------
+
+Bom saber sobre View Scoped: 
+Enquanto estiver com a tela 'primeirapagina.xhtml' aberta, independente do que estiver na tela (exemplo um formulario de cadastro)
+o maneged bean vai manter esse estado de ativo, ou seja, vai continuar mantendo os dados na tela. Portanto, o que 
+vai fazendo na tela vai guardando os dados.
+Logo, ele só morre, se por exemplo, redirecionar a tela para outra página.
+
+---------------------------------
+
+Bom saber sobre Session Scoped: 
+Usado para usuários logados. A sessão é mantida enquanto o navegador continuar aberto pelo usuário.
+Acesse o link do seu projeto cadastre alguns nomes e depois submeta esse mesmo link em outra aba do seu navegador, 
+você verá que manterá os nomes ainda cadastrados.
+
+---------------------------------
+
+Bom saber sobre Application Scoped: 
+Significa que todos os usuário irão poder compartilhar esses dados, até os que não teriam permissão de visualizar a 
+informação dos dados. É compartilhado em todas as aplicações.
+
+---------------------------------
+
+Managed Bean: É qualquer bean cuja vida é gerenciada pelo Faces.
+
+Backing Bean: Como diz o nome, é um “Bean por detrás”, um “Bean que dá suporte”. Ou seja, é o Bean que está por trás da funcionalidade
+de uma página, cuidando dos seus componentes, do estado da página, da navegação, etc. Costuma ser intimamente associado a 
+alguma página.
+Todo backing-bean também é um managed bean, mas nem todo managed bean é um backing-bean. Pode ser um objeto de negócio, por exemplo.
+
+Backing Bean (são maneged bean) trabalha com os componentes jsf junto com o objeto, ou seja, todos os componentes xhtml 
+que estiver terá a respectiva classe do java. É possivel trabalhar com os componentes no back-end. Mas essa pratica não 
+é recomendada.
+
+------------------------------
+
+A navegação explicita é feito dentro do arquivo faces-config.xml
+
+

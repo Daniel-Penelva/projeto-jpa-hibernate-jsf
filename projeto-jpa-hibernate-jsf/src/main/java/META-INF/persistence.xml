@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+	<persistence-unit name="projeto-jpa-hibernate-jsf">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>br.com.projetoJpaHibernateJsf.entidade.Pessoa</class>
+
+		<!-- Dados de conexão com o banco de dados -->
+
+		<properties>
+
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:postgresql://localhost:5433/projetoJsfJpaHibernate" />
+			<property name="javax.persistence.jdbc.user"
+				value="postgres" />
+			<property name="javax.persistence.jdbc.password"
+				value="admin" />
+			<property name="javax.persistence.jdbc.driver"
+				value="org.postgresql.Driver" />
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.PostgreSQLDialect" />
+
+			<!-- Imprime no console a sql -->
+			<property name="hibernate.show_sql" value="true" />
+
+			<!-- Para a SQL ser estruturada da forma correta e não bagunçada -->
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+
+		</properties>
+
+	</persistence-unit>
+</persistence>
