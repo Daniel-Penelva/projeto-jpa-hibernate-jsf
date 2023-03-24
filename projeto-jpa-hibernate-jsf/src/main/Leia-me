@@ -153,4 +153,9 @@ que estiver terá a respectiva classe do java. É possivel trabalhar com os comp
 
 A navegação explicita é feito dentro do arquivo faces-config.xml
 
+------------------------------
+
+Vamos criar um JPUtil para instanciar e criar um EntityManager sempre que precisar se comunicar com o BD. Vamos 
+criar um padrão Singleton para instanciar uma única vez.
+
 
