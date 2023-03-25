@@ -13,17 +13,18 @@ public class PessoaBean {
 	private Pessoa pessoa = new Pessoa();
 	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
 
-	/* Chamando o método salvar do DaoGeneric */
+	/* Chamando o método merge do DaoGeneric */
 	public String salvar() {
 		
-		daoGeneric.salvar(pessoa);
-		
-		/* instanciando uma pessoa para que possa salvar vários pessoas sem precisar
-		 * atualizar a primeirapagina.xhtml. No caso, você irá reparar que vai limpar
-		 * até os campos de texos. */
-		pessoa = new Pessoa();
+		pessoa = daoGeneric.merge(pessoa);
 		
 		/* Vai retornar o valor na mesma página, no caso, primeirapagina.xhtml*/
+		return "";
+	}
+	
+	/* Método para redirecionar na primeirapágina.xhtml e instanciar um novo usuário */
+	public String novo() {
+		pessoa = new Pessoa();
 		return "";
 	}
 
