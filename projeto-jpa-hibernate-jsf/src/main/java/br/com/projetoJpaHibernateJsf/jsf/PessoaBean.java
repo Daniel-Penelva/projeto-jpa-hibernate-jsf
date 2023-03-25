@@ -15,7 +15,13 @@ public class PessoaBean {
 
 	/* Chamando o método salvar do DaoGeneric */
 	public String salvar() {
+		
 		daoGeneric.salvar(pessoa);
+		
+		/* instanciando uma pessoa para que possa salvar vários pessoas sem precisar
+		 * atualizar a primeirapagina.xhtml. No caso, você irá reparar que vai limpar
+		 * até os campos de texos. */
+		pessoa = new Pessoa();
 		
 		/* Vai retornar o valor na mesma página, no caso, primeirapagina.xhtml*/
 		return "";
