@@ -18,5 +18,10 @@ public class JPAUtil {
 	public static EntityManager getEntityManager() {
 		return factory.createEntityManager();
 	}
+	
+	/* O método getIdentifier retorna o id da Pessoa */
+	public static Object getPrimaryKet(Object entidade) {
+	   return factory.getPersistenceUnitUtil().getIdentifier(entidade);
+	}
 
 }

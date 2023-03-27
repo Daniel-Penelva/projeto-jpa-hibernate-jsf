@@ -27,6 +27,17 @@ public class PessoaBean {
 		pessoa = new Pessoa();
 		return "";
 	}
+	
+	/* Método para remover uma pessoa por id */
+	public String remove() {
+		
+		daoGeneric.deletarPorId(pessoa);
+		
+		/*Depois de deletar, vamos instanciar uma Pessoa para limpar a tela */
+		pessoa = new Pessoa();
+		
+		return "";
+	}
 
 	public Pessoa getPessoa() {
 		return pessoa;
