@@ -10,8 +10,8 @@
 
 	<h:form>
 
-        <h:outputLabel value="Id:" />
-		<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true"/>
+		<h:outputLabel value="Id:" />
+		<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 		<br />
 
 		<h:outputLabel value="Nome:" />
@@ -29,10 +29,28 @@
 		<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" />
 		<h:commandButton value="Novo" action="#{pessoaBean.novo}" />
 		<h:commandButton value="Remover" action="#{pessoaBean.remove}" />
-		
-		<!-- A ação do botão vai chamar o método salvar do DaoGeneric, mas antes vai
-		passar pelo PessoaBean -->
 
+		<br />
+
+		<div>
+			<h:dataTable var="p" value="#{pessoaBean.pessoas}">
+				<h:column>
+					<h:outputText value="#{p.id}" />
+				</h:column>
+
+				<h:column>
+					<h:outputText value="#{p.nome}" />
+				</h:column>
+
+				<h:column>
+					<h:outputText value="#{p.sobrenome}" />
+				</h:column>
+
+				<h:column>
+					<h:outputText value="#{p.idade}" />
+				</h:column>
+			</h:dataTable>
+		</div>
 	</h:form>
 
 </h:body>
