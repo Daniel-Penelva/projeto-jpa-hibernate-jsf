@@ -10,6 +10,9 @@
 <h:body>
 
 	<h:form>
+
+		<h:graphicImage height="150" width="150" library="img" name="jsf.png"/>
+
 		<h:panelGrid columns="2">
 			<f:facet name="header">
 				<h:outputText value="Cadastro em JSF" />
@@ -37,7 +40,8 @@
 		</h:panelGrid>
 
 
-		<h:dataTable var="p" value="#{pessoaBean.pessoas}" border="2" cellpadding="4">
+		<h:dataTable var="p" value="#{pessoaBean.pessoas}" border="2"
+			cellpadding="4">
 
 			<f:facet name="header">
 		         Lista de Pessoas Cadastradas
@@ -66,14 +70,16 @@
 			<h:column>
 				<f:facet name="header">Editar Usuário</f:facet>
 				<h:commandLink value="Editar">
-					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />
+					<f:setPropertyActionListener value="#{p}"
+						target="#{pessoaBean.pessoa}" />
 				</h:commandLink>
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Excluir Usuário</f:facet>
 				<h:commandLink value="Excluir" action="#{pessoaBean.remove}">
-					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />
+					<f:setPropertyActionListener value="#{p}"
+						target="#{pessoaBean.pessoa}" />
 				</h:commandLink>
 			</h:column>
 		</h:dataTable>
