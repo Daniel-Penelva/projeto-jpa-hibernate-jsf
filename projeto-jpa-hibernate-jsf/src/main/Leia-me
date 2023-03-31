@@ -182,5 +182,5 @@ Sobre o selectOneMenu = comboBox - para selecionar APENAS UMA OPÇÃO
 
 Sobre o selectManyMenu = comboBox - para selecionar MAIS DE UMA OPÇÃO
 
-Vale ressaltar que como são vários itens que podems ser marcados, logo o atributo tem que ser do tipo lista.
+Vale ressaltar que como são vários itens que podem ser marcados, logo o atributo tem que ser do tipo lista.
 

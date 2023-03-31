@@ -49,6 +49,9 @@
 			</h:selectManyMenu>
 			
 			
+			<h:outputLabel value="Ativo:" />
+			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}"/>
+			
 			<h:panelGroup>
 				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" />
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}" />
