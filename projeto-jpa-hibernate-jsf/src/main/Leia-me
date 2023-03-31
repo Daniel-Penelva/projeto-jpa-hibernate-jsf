@@ -165,3 +165,7 @@ xmlns:f="http://java.sun.com/jsf/core"
 
 O core da suporte para vários elementos html do jsf
 
+-------------------------------
+
+PainelGrid é um painel que se torna uma tabela para montar formulários e organizar os componentes em tela.
+
