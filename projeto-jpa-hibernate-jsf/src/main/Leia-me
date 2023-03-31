@@ -171,10 +171,16 @@ PainelGrid é um painel que se torna uma tabela para montar formulários e organ
 
 -------------------------------
 
-Sobre o selectOneMenu = comboBox
+Sobre o selectOneMenu = comboBox - para selecionar APENAS UMA OPÇÃO
  -> selectItem = adiciona itens 
  -> itemValue = é o valor que vai ser gravado no banco de dados
  -> itemLabel = é o valor que irá aparecer na tela.
  -> required="true"(define como um valor obrigatório - caso não seja marcado não irá salvar no BD)
  -> noSelectionOption = não seleciona o item, ou seja, vai ter que escolher Masculino ou Feminino. 
+ 
+ -------------------------------
+
+Sobre o selectManyMenu = comboBox - para selecionar MAIS DE UMA OPÇÃO
+
+Vale ressaltar que como são vários itens que podems ser marcados, logo o atributo tem que ser do tipo lista.
 

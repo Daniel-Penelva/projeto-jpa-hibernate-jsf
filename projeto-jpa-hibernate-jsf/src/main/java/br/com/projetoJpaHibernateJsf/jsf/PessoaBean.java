@@ -27,6 +27,7 @@ public class PessoaBean implements Serializable{
 	public String salvar() {
 
 		pessoa = daoGeneric.merge(pessoa);
+		carregarPessoas();
 
 		/* Vai retornar o valor na mesma página, no caso, primeirapagina.xhtml */
 		return "";
@@ -44,6 +45,8 @@ public class PessoaBean implements Serializable{
 	public String remove() {
 
 		daoGeneric.deletarPorId(pessoa);
+		pessoa = new Pessoa();
+		carregarPessoas();
 
 		/* Depois de deletar, vamos instanciar uma Pessoa para limpar a tela */
 		pessoa = new Pessoa();
