@@ -11,7 +11,7 @@
 
 	<h:form>
 
-		<h:graphicImage height="150" width="150" library="img" name="jsf.png"/>
+		<h:graphicImage height="150" width="150" library="img" name="jsf.png" />
 
 		<h:panelGrid columns="2">
 			<f:facet name="header">
@@ -29,6 +29,13 @@
 
 			<h:outputLabel value="Idade:" />
 			<h:inputText value="#{pessoaBean.pessoa.idade}" />
+
+			<h:outputLabel value="Sexo:" />
+			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}" required="true">
+	            <f:selectItem itemValue="NAO" itemLabel="Selecione" noSelectionOption="true"/>		
+				<f:selectItem itemValue="MASCULINO" itemLabel="Masculino"/>
+				<f:selectItem itemValue="FEMININO" itemLabel="Feminino"/>
+			</h:selectOneMenu>
 
 			<h:outputLabel />
 			<h:panelGroup>

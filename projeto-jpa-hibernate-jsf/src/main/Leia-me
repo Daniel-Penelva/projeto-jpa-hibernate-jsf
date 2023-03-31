@@ -169,3 +169,12 @@ O core da suporte para vários elementos html do jsf
 
 PainelGrid é um painel que se torna uma tabela para montar formulários e organizar os componentes em tela.
 
+-------------------------------
+
+Sobre o selectOneMenu = comboBox
+ -> selectItem = adiciona itens 
+ -> itemValue = é o valor que vai ser gravado no banco de dados
+ -> itemLabel = é o valor que irá aparecer na tela.
+ -> required="true"(define como um valor obrigatório - caso não seja marcado não irá salvar no BD)
+ -> noSelectionOption = não seleciona o item, ou seja, vai ter que escolher Masculino ou Feminino. 
+
