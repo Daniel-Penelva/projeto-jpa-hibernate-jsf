@@ -159,4 +159,9 @@ A navegação explicita é feito dentro do arquivo faces-config.xml
 Vamos criar um JPUtil para instanciar e criar um EntityManager sempre que precisar se comunicar com o BD. Vamos 
 criar um padrão Singleton para instanciar uma única vez.
 
+------------------------------
+
+xmlns:f="http://java.sun.com/jsf/core"
+
+O core da suporte para vários elementos html do jsf
 
