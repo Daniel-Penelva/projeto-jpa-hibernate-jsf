@@ -184,3 +184,26 @@ Sobre o selectManyMenu = comboBox - para selecionar MAIS DE UMA OPÇÃO
 
 Vale ressaltar que como são vários itens que podem ser marcados, logo o atributo tem que ser do tipo lista.
 
+-------------------------------
+
+Filtro de autenticação (Padrão Open Session)
+
+  (Open session View - abre uma sessão de conexão)
+                       |
+  (TELA login)         |       
+    NAVEGADOR ---------|-------> SERVIDOR
+              <--------|--------    
+                       |                       
+                      FILTER    
+             (Intercepta a requisição)
+             
+Vai ser criado uma classe que vai controlar todas as páginas acessadas. Para poder verificar se o usuário está 
+logado ou não. Se não estiver logado vai fazer um redirecionamento para a tela de login.
+Vai ser criado a classe 'FilterAutenticacao' e vamos usar a seguinte anotação:
+
+@WebFilter(urlPatterns = {"/*"})
+Class FilterAutenticacao implements Filter{...}
+
+OBS. Vai interceptar todas as páginas, ou seja, todas as urls.
+OBS. Vai ser implementado o Filter do pacote servlet.
+
