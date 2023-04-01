@@ -36,20 +36,26 @@ public class FilterAutenticacao implements Filter, Serializable{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
+		/* Fazer a requisição */
 		HttpServletRequest req = (HttpServletRequest) request;
-		HttpSession session = req.getSession();
 		
+		/* Abrir uma sessão única carregando o atributo do usuário logado */
+		HttpSession session = req.getSession();
 		Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
 		
+		/* getServletPath() é o endereço do sistema da url, para saber o que ele está acessando */
 		String url = req.getServletPath();
 		
-		/* A url tem que ser diferente de index.jsf e o usuario não está logado e irá autenticar */
+		/* A url tem que ser diferente de index.jsf(página de login) e o usuario não está logado e irá autenticar */
 		if(!url.equalsIgnoreCase("index.jsf") && usuarioLogado == null) {
+			
+			/* Vai redirecionar para o index.jsf */
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsf");
 			dispatcher.forward(request, response);
 			return;
+			
 		}else {
-			/* Executa as ações do request e do response */
+			/* Executa as ações do request e do response, caso esteja logado */
 		chain.doFilter(request, response);
 		}
 	}
@@ -60,6 +66,5 @@ public class FilterAutenticacao implements Filter, Serializable{
 		/* Para criar o EntityManager */
 		jpaUtil.getEntityManager();
 	}
-	
 
 }
