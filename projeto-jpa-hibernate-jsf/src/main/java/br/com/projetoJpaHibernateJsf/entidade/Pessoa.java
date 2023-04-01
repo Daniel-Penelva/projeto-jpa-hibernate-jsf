@@ -31,6 +31,10 @@ public class Pessoa implements Serializable {
 	private String sexo;
 	private String[] frameworks;
 	private Boolean ativo;
+	
+	private String login;
+	private String senha;
+	private String perfilUser;
 
 	public Long getId() {
 		return id;
@@ -95,6 +99,30 @@ public class Pessoa implements Serializable {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	public String getPerfilUser() {
+		return perfilUser;
+	}
+	
+	public void setPerfilUser(String perfilUser) {
+		this.perfilUser = perfilUser;
 	}
 
 	/*

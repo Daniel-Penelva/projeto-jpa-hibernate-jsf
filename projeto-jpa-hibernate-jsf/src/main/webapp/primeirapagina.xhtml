@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-	<title>Olá JSF</title>
+	<title>Cadastro de Usuários</title>
 </h:head>
 <h:body>
 
@@ -15,7 +15,7 @@
 
 		<h:panelGrid columns="2">
 			<f:facet name="header">
-				<h:outputText value="Cadastro em JSF" />
+				<h:outputText value="Cadastro de Usuário" />
 			</f:facet>
 
 			<h:outputLabel value="Id:" />
@@ -52,6 +52,23 @@
 			<h:outputLabel value="Ativo:" />
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}"/>
 			
+			<h:outputLabel value="Login:" />
+			<h:inputText value="#{pessoaBean.pessoa.login}"/>
+			
+			<h:outputLabel value="Senha:" />
+			<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
+			
+			
+			<h:outputLabel value="Perfil:" />
+			<h:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUser}" required="false">
+	            <f:selectItem itemValue="NAO" itemLabel="Selecione" noSelectionOption="true"/>		
+				<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador"/>
+				<f:selectItem itemValue="PROGRAMADOR" itemLabel="Programador"/>
+				<f:selectItem itemValue="ANALISTA" itemLabel="Analista de Sistema"/>
+			</h:selectOneMenu>
+			
+			
+			
 			<h:panelGroup>
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo"/>
 				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar"/>
@@ -66,7 +83,7 @@
 			cellpadding="4">
 
 			<f:facet name="header">
-		         Lista de Pessoas Cadastradas
+		         Lista de Usuário Cadastrados
 		    </f:facet>
 
 			<h:column>
