@@ -5,23 +5,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import br.com.projetoJpaHibernateJsf.dao.DaoGeneric;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
+import br.com.projetoJpaHibernateJsf.repository.IDaoPessoa;
+import br.com.projetoJpaHibernateJsf.repository.IDaoPessoaImpl;
 
 @ViewScoped
 @ManagedBean(name = "pessoaBean")
-public class PessoaBean implements Serializable{
+public class PessoaBean implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-	
+
 	private Pessoa pessoa = new Pessoa();
 	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
 
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
+
+	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
 
 	/* Chamando o método merge do DaoGeneric */
 	public String salvar() {
@@ -58,6 +66,33 @@ public class PessoaBean implements Serializable{
 	@PostConstruct
 	public void carregarPessoas() {
 		pessoas = daoGeneric.getListEntity(Pessoa.class);
+	}
+
+	/* Método para logar o usuário */
+	public String logar() {
+
+		Pessoa pessoaUser = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
+
+		/* Achou o usuário */
+		if (pessoaUser != null) {
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			
+			HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
+			HttpSession session = req.getSession();
+			
+			/* Adicionar o usuário na sessão usuarioLogado (vai cair no filtro de autenticação) */
+			session.setAttribute("usuarioLogado", pessoaUser);
+
+			return "primeirapagina.jsf";
+			
+		}else {
+			FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Usuário não encontrado!"));
+		}
+
+		/* Se não logar com sucesso vai redirecionar para a página index.jsf */
+		return "index.jsf";
 	}
 
 	public Pessoa getPessoa() {

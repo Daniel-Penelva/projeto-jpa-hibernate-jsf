@@ -18,11 +18,7 @@ import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
 import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 
 @WebFilter(urlPatterns = {"/*"})
-public class FilterAutenticacao implements Filter, Serializable{
-
-	
-	private static final long serialVersionUID = 1L;
-	
+public class FilterAutenticacao implements Filter{
 	
 	private JPAUtil jpaUtil;
 	
@@ -41,6 +37,7 @@ public class FilterAutenticacao implements Filter, Serializable{
 		
 		/* Abrir uma sessão única carregando o atributo do usuário logado */
 		HttpSession session = req.getSession();
+		
 		Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
 		
 		/* getServletPath() é o endereço do sistema da url, para saber o que ele está acessando */
