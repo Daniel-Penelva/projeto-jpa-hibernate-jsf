@@ -211,5 +211,33 @@ OBS. Vai ser implementado o Filter do pacote servlet.
 
 O atributo 'rendered' permite ocultar ou mostrar componentes ou parte da tela de acordo com o perfil do usuário.
 Para fazer esse tipo de funcionalidade vai ser criado um método do tipo boolean e vai receber como 
-parametro o tipo de acesso que vai ser permitido. Vai ser recuperado o usuario logado na sessão 
+parametro o tipo de acesso que vai ser permitido. Vai ser recuperado o usuario logado na sessão.
+
+-----------------------------------------------------
+
+BOTÃO EDITAR
+No tutorial “PRIMEFACES: DADOS COM DATATABLE”, criamos com o componente p:dataTable, uma tabela para listar os dados cadastrados. 
+Dentro do dataTable definimos a estrutura de colunas.
+
+Em termos de linhas de código a estrutura de um p:column é simples, incluindo um atributo que define o cabeçalho, da coluna, 
+headerText. E neste caso, como queremos implementar apenas um botão, poderemos recorrer ao JavaServer Faces. Caso, se tratasse 
+de uma implementação sofisticada, e, onde o design fizesse a diferença, certamente o PrimeFaces seria a nossa escolha.
+
+Assim, dentro do contexto do dataTable utilizaremos o h:commandLink, componente do JSF que renderiza um elemento HTML – HyperText 
+Markup Language (Linguagem de Marcação de Hipertexto), do tipo âncora.
+
+Com o componente f:setPropertyActionListener colocaremos o objeto em edição na tela. Esta tag ficará “escutando” o componente 
+que do seu lado, tem como valor uma propriedade bean definida.
+
+E ainda, o f:setPropertyActionListener implementará o value, o responsável por pegar o objeto selecionado pelo usuário, ao 
+passo que o target é o objeto do ManagedBean que receberá o objeto pessoa a ser colocado em edição.
+
+BOTÃO EXCLUIR
+Os princípios aplicados no botão “Editar” são os mesmos que aplicaremos no botão de “Excluir”, obviamente mudando apenas a 
+função do link. Neste caso o “Excluir” deverá chamar o método remover(). Assim, no h:commandLink o atributo action, deverá 
+invocar o método.
+
+EM POUCAS PALAVRAS
+Desse modo, quando o usuário clicar em “Excluir”, tal como acontece quando o objeto é colocado em edição, o objeto em questão 
+é passado para o ManagedBean, que controla a página. E só então o método remover() será chamado.
 
