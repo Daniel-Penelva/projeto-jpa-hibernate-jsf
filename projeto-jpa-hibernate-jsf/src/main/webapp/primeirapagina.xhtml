@@ -74,6 +74,20 @@
 				<f:selectItem itemValue="ANALISTA" itemLabel="Analista de Sistema"/>
 			</h:selectOneMenu>
 			
+			<h:outputLabel value="Lingua:" />
+			<h:selectOneRadio value="#{pessoaBean.pessoa.lingua}">
+			   <f:selectItem itemValue="INGLES" itemLabel="Inglês"/>
+			   <f:selectItem itemValue="ESPANHOL" itemLabel="Espanhol"/>
+			</h:selectOneRadio>
+			
+			<h:outputLabel value="Nível Programador:" />
+			<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}" layout="pageDirection">
+			   <f:selectItem itemValue="JUNIOR" itemLabel="Junior"/>
+			   <f:selectItem itemValue="PLENO" itemLabel="Pleno"/>
+			   <f:selectItem itemValue="SENIOR" itemLabel="Sênior"/>
+			   <f:selectItem itemValue="ESPECIALISTA" itemLabel="Especialista"/>
+			</h:selectOneRadio>
+			
 			<h:panelGroup>
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo"/>
 				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar"/>

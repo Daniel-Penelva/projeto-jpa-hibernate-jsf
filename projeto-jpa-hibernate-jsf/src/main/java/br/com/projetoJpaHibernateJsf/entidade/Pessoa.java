@@ -35,6 +35,9 @@ public class Pessoa implements Serializable {
 	private String login;
 	private String senha;
 	private String perfilUser;
+	
+	private String lingua;
+	private String nivelProgramador;
 
 	public Long getId() {
 		return id;
@@ -123,6 +126,22 @@ public class Pessoa implements Serializable {
 	
 	public void setPerfilUser(String perfilUser) {
 		this.perfilUser = perfilUser;
+	}
+
+	public String getLingua() {
+		return lingua;
+	}
+
+	public void setLingua(String lingua) {
+		this.lingua = lingua;
+	}
+	
+	public String getNivelProgramador() {
+		return nivelProgramador;
+	}
+
+	public void setNivelProgramador(String nivelProgramador) {
+		this.nivelProgramador = nivelProgramador;
 	}
 
 	/*
