@@ -88,7 +88,7 @@
 					</h:commandLink>
 				</h:column>
 				
-				<h:column>
+				<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
 					<f:facet name="header">Remover:</f:facet>
 					<h:commandLink action="#{lancamentoBean.remove}" title="Remover">
 						<h:graphicImage value="/resources/img/remover.png" />
