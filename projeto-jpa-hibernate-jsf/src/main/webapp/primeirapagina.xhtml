@@ -10,8 +10,8 @@
 <h:body>
 
     <h:form>
-       <h:commandLink value="Administração" action="lancamento" style="margin-left:1cm;"/>
-       <h:commandLink value="Lançamentos" action="primeirapagina" style="margin-left:1cm;"/>
+       <h:commandLink value="Administração" action="primeirapagina" style="margin-left:1cm;"/>
+       <h:commandLink value="Lançamentos" action="lancamento" style="margin-left:1cm;"/>
        <h:commandLink value="Trocar Usuário" action="index" style="margin-left:1cm;"/>
     </h:form>
 
@@ -73,8 +73,6 @@
 				<f:selectItem itemValue="PROGRAMADOR" itemLabel="Programador"/>
 				<f:selectItem itemValue="ANALISTA" itemLabel="Analista de Sistema"/>
 			</h:selectOneMenu>
-			
-			
 			
 			<h:panelGroup>
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo"/>
