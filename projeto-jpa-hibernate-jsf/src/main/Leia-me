@@ -207,3 +207,9 @@ Class FilterAutenticacao implements Filter{...}
 OBS. Vai interceptar todas as páginas, ou seja, todas as urls.
 OBS. Vai ser implementado o Filter do pacote servlet.
 
+----------------------------------------------------
+
+O atributo 'rendered' permite ocultar ou mostrar componentes ou parte da tela de acordo com o perfil do usuário.
+Para fazer esse tipo de funcionalidade vai ser criado um método do tipo boolean e vai receber como 
+parametro o tipo de acesso que vai ser permitido. Vai ser recuperado o usuario logado na sessão 
+

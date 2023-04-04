@@ -13,7 +13,7 @@
 
 		<h:graphicImage height="150" width="150" library="img" name="jsf.png" />
 
-		<h:panelGrid columns="2">
+		<h:panelGrid columns="2" rendered="true">
 			<f:facet name="header">
 				<h:outputText value="Cadastro de Usuário" />
 			</f:facet>
@@ -72,7 +72,7 @@
 			<h:panelGroup>
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo"/>
 				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar"/>
-				<h:commandButton value="Remover" action="#{pessoaBean.remove}" image="/resources/img/remover.png" title="Remover"/>
+				<h:commandButton value="Remover" action="#{pessoaBean.remove}" image="/resources/img/remover.png" title="Remover" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}"/>
 				<h:commandButton value="Limpar" type="reset" image="/resources/img/limpar.png" title="Limpar"/>
 			</h:panelGroup>
 
@@ -80,7 +80,7 @@
 
 
 		<h:dataTable var="p" value="#{pessoaBean.pessoas}" border="2"
-			cellpadding="4">
+			cellpadding="4" rendered="true">
 
 			<f:facet name="header">
 		         Lista de Usuário Cadastrados
@@ -114,7 +114,7 @@
 				</h:commandLink>
 			</h:column>
 
-			<h:column>
+			<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
 				<f:facet name="header">Excluir Usuário</f:facet>
 				<h:commandLink action="#{pessoaBean.remove}" title="Excluir">
 					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />

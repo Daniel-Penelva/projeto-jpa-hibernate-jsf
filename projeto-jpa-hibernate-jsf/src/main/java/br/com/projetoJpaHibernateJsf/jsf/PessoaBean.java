@@ -94,6 +94,15 @@ public class PessoaBean implements Serializable {
 		/* Se não logar com sucesso vai redirecionar para a página index.jsf */
 		return "index.jsf";
 	}
+	
+	/* Mostrando e ocultando de acordo com o perfil do usuário */
+	public boolean permiteAcesso(String acesso) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = context.getExternalContext();
+		Pessoa pessoa = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
+		
+		return pessoa.getPerfilUser().equals(acesso);
+	}
 
 	public Pessoa getPessoa() {
 		return pessoa;
