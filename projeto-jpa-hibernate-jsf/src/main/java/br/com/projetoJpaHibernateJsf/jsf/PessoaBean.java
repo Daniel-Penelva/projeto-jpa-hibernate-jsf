@@ -36,9 +36,19 @@ public class PessoaBean implements Serializable {
 
 		pessoa = daoGeneric.merge(pessoa);
 		carregarPessoas();
+		
+		mostrarMsg("Cadastrado com Sucesso!");
 
 		/* Vai retornar o valor na mesma página, no caso, primeirapagina.xhtml */
 		return "";
+	}
+
+	private void mostrarMsg(String msg) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		FacesMessage message = new FacesMessage(msg);
+		
+		context.addMessage(null, message);
 	}
 
 	/*
@@ -55,6 +65,7 @@ public class PessoaBean implements Serializable {
 		daoGeneric.deletarPorId(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas();
+		mostrarMsg("Removido com Sucesso!");
 
 		/* Depois de deletar, vamos instanciar uma Pessoa para limpar a tela */
 		pessoa = new Pessoa();
