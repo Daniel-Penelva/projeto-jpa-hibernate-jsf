@@ -241,3 +241,11 @@ EM POUCAS PALAVRAS
 Desse modo, quando o usuário clicar em “Excluir”, tal como acontece quando o objeto é colocado em edição, o objeto em questão 
 é passado para o ManagedBean, que controla a página. E só então o método remover() será chamado.
 
+--------------------------------------------------
+
+Os atributos locale e timeZone Vão fazer com que pegue a data real:
+<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00"/>
+
+OBS. converterMessage="Data Errada"
+É um validador de data para caso do usuário entrar com a data errada.
+
