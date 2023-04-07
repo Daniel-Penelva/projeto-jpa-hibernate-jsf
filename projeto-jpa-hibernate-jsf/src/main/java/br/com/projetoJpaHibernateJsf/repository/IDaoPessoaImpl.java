@@ -56,8 +56,11 @@ public class IDaoPessoaImpl implements IDaoPessoa{
 		
 		for (Estados estado : estados) {
 			
-			/* No selectItem (combo) vai ser passado o objeto inteiro e o label por parâmetro */
-			selectItems.add(new SelectItem(estado, estado.getNome()));
+			/* No selectItem (combo) vai ser passado o id do objeto e o label por parâmetro. Essa linha de código
+			 * que permite capturar o valor do objeto, no caso, capturar o id do objeto, por exemplo, inspecione (F12) o 
+			 * código primeirapagina.xhtml e você verá no selected na  'optionValue' que estamos capturando pelo 
+			 * id (estado.getId()). Portanto, vamos recuperar este código. */
+			selectItems.add(new SelectItem(estado.getId(), estado.getNome()));
 		}
 				
 				

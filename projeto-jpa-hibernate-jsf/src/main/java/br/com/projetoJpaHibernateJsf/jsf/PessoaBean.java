@@ -225,6 +225,18 @@ public class PessoaBean implements Serializable {
 		estados = iDaoPessoa.listaEstados();
 		return estados;
 	}
+	
+	/* Método que vai ser carregado na primeirapágina.xhtml */
+	public void carregaCidades(AjaxBehaviorEvent event) {
+		/*Para teste:
+		 * System.out.println(event.getComponent().getAttributes().get("submittedValue"));*/
+		
+		String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
+		
+		if(codigoEstado != null) {
+			System.out.println(codigoEstado);
+		}
+	}
 
 	public Pessoa getPessoa() {
 		return pessoa;
