@@ -8,6 +8,8 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.projetoJpaHibernateJsf.entidade.Pessoa</class>
 		<class>br.com.projetoJpaHibernateJsf.entidade.Lancamento</class>
+		<class>br.com.projetoJpaHibernateJsf.entidade.Estados</class>
+		<class>br.com.projetoJpaHibernateJsf.entidade.Cidades</class>
 
 		<!-- Dados de conexão com o banco de dados -->
 
