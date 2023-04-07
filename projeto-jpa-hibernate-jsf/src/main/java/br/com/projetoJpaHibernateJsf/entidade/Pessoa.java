@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -50,6 +51,12 @@ public class Pessoa implements Serializable {
 	private String unidade;
 	private String ibge;
 	private String gia;
+	
+	/*Vamos criar esse atributo para auxiliar na programação, o objetivo é manter esse objeto apenas na 
+	 * memória, não queremos que o JPA/Hibernate crie essa propriedade na tabela Pessoa. Logo, para isso 
+	 * vai ser usado a anotação @Transient para que o hibernate não grave (não persistir) no BD. */
+	@Transient
+	private Estados estados;
 
 	public Long getId() {
 		return id;
@@ -234,6 +241,14 @@ public class Pessoa implements Serializable {
 
 	public void setGia(String gia) {
 		this.gia = gia;
+	}
+	
+	public Estados getEstados() {
+		return estados;
+	}
+
+	public void setEstados(Estados estados) {
+		this.estados = estados;
 	}
 
 	/*

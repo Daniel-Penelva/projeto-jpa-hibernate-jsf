@@ -1,10 +1,13 @@
 package br.com.projetoJpaHibernateJsf.repository;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import br.com.projetoJpaHibernateJsf.entidade.Estados;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
 import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 
@@ -33,6 +36,32 @@ public class IDaoPessoaImpl implements IDaoPessoa{
 		entityManager.close();
 
 		return pessoa;
+	}
+
+	
+	@Override
+	public List<SelectItem> listaEstados() {
+		
+		/* Declarando uma lista de SelectItem */
+		List<SelectItem> selectItems = new ArrayList<SelectItem>();
+		
+		/* Criando um entityManager */
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		
+		/* Abrir uma transação com o BD */
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
+		/* Acessando a lista de estados (acessa a Classe Estados) */
+		List<Estados> estados = entityManager.createQuery("from Estados").getResultList();
+		
+		for (Estados estado : estados) {
+			
+			/* No selectItem (combo) vai ser passado o objeto inteiro e o label por parâmetro */
+			selectItems.add(new SelectItem(estado, estado.getNome()));
+		}
+				
+				
+		return selectItems;
 	}
 
 }

@@ -143,6 +143,11 @@
 				<f:selectItem itemValue="4" itemLabel="PYTHON" />
 				<f:selectItem itemValue="5" itemLabel="C#" />
 			</h:selectManyCheckbox>
+			
+			<h:outputLabel value="Estados:" />
+			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}">
+				<f:selectItems value="#{pessoaBean.estados}"/>
+			</h:selectOneMenu>
 
 			<h:panelGroup>
 				<h:commandButton value="Novo" id="botaoNovo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo" >

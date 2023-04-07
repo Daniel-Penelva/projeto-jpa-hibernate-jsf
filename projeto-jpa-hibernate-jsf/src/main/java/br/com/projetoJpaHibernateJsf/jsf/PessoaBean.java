@@ -16,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -39,12 +40,14 @@ public class PessoaBean implements Serializable {
 
 	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
 
+	private List<SelectItem> estados;
+
 	/* Chamando o método merge do DaoGeneric */
 	public String salvar() {
 
 		pessoa = daoGeneric.merge(pessoa);
 		carregarPessoas();
-		
+
 		mostrarMsg("Cadastrado com Sucesso!");
 
 		/* Vai retornar o valor na mesma página, no caso, primeirapagina.xhtml */
@@ -53,21 +56,21 @@ public class PessoaBean implements Serializable {
 
 	private void mostrarMsg(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
-		
+
 		FacesMessage message = new FacesMessage(msg);
-		
+
 		context.addMessage(null, message);
 	}
 
 	/*
-	 * Método para redirecionar na primeirapágina.xhtml e instanciar um novo usuário.
-	 * Executa algum processo antes do novo.
+	 * Método para redirecionar na primeirapágina.xhtml e instanciar um novo
+	 * usuário. Executa algum processo antes do novo.
 	 */
 	public String novo() {
 		pessoa = new Pessoa();
 		return "";
 	}
-	
+
 	/* Executa algum processo antes de limpar */
 	public String limpar() {
 		pessoa = new Pessoa();
@@ -104,83 +107,100 @@ public class PessoaBean implements Serializable {
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = context.getExternalContext();
-			
+
 			HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
 			HttpSession session = req.getSession();
-			
-			/* Adicionar o usuário na sessão usuarioLogado (vai cair no filtro de autenticação) */
+
+			/*
+			 * Adicionar o usuário na sessão usuarioLogado (vai cair no filtro de
+			 * autenticação)
+			 */
 			session.setAttribute("usuarioLogado", pessoaUser);
 
 			return "primeirapagina.jsf";
-			
-		}else {
+
+		} else {
 			FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Usuário não encontrado!"));
 		}
 
 		/* Se não logar com sucesso vai redirecionar para a página index.jsf */
 		return "index.jsf";
 	}
-	
+
 	/* Método deslogar usuário */
 	public String deslogar() {
-		
-		/* Para deslogar faz o mesmo processo, porém vamos usar o método remove da Class Map para remover o usuarioLogado */
+
+		/*
+		 * Para deslogar faz o mesmo processo, porém vamos usar o método remove da Class
+		 * Map para remover o usuarioLogado
+		 */
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 		externalContext.getSessionMap().remove("usuarioLogado");
-		
+
 		/* Acessar todo o contexto da requisição */
-		HttpServletRequest httpServletRequest = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
-		
+		HttpServletRequest httpServletRequest = (HttpServletRequest) context.getCurrentInstance().getExternalContext()
+				.getRequest();
+
 		/* Invalidar a sessão da requisição */
 		httpServletRequest.getSession().invalidate();
-		
-		/* Redireciona para a tela index.jsf*/
+
+		/* Redireciona para a tela index.jsf */
 		return "index.jsf";
 	}
-	
+
 	/* Mostrando e ocultando de acordo com o perfil do usuário */
 	public boolean permiteAcesso(String acesso) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoa = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
-		
+
 		return pessoa.getPerfilUser().equals(acesso);
 	}
-	
+
 	/* Método de pesquisa de CEP */
 	public void pesquisaCep(AjaxBehaviorEvent event) {
-		
+
 		try {
 			/* Capturar a URL do cep lá no servidor para fazer o consumo */
-			URL url = new URL("https://viacep.com.br/ws/"+pessoa.getCep()+"/json/");
-			
+			URL url = new URL("https://viacep.com.br/ws/" + pessoa.getCep() + "/json/");
+
 			/* Abrir uma conexão dessa url do cep */
 			URLConnection connection = url.openConnection();
-			
+
 			/* Obter o retorno dessa url, ou seja, dos dados da url */
 			InputStream is = connection.getInputStream();
-			
-			/* Esse retorno é jogado para dentro do Buffer que são classes para fazer leitura de fluxo de dados */
+
+			/*
+			 * Esse retorno é jogado para dentro do Buffer que são classes para fazer
+			 * leitura de fluxo de dados
+			 */
 			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-			
+
 			/* Jogar esse retorno para dentro de uma String */
 			String cep = "";
 			StringBuilder jsonCep = new StringBuilder();
-			
-			/*Como ele vem na forma de uma string é preciso varrer todas as linhas dela.
-			 * No caso, vão vir o cep, logradouro, complemento, numero, ... */
-			while((cep = br.readLine()) != null){
+
+			/*
+			 * Como ele vem na forma de uma string é preciso varrer todas as linhas dela. No
+			 * caso, vão vir o cep, logradouro, complemento, numero, ...
+			 */
+			while ((cep = br.readLine()) != null) {
 				jsonCep.append(cep);
 			}
-			
-			/* Iniciou um novo objeto gson, e os valores que virão das linhas serão jogados nos atributos
-			 * do cep, logradouro, complemento, bairro, localidade, numero, uf, unidade, ibge e gia. Vale 
-			 * ressaltar que os nomes dos atributos precisam ser iguais aos valores das linhas. 
-			 * Objetivo transformar o resultado para dentro de um objeto para auxiliar a colocar os dados em tela. */
+
+			/*
+			 * Iniciou um novo objeto gson, e os valores que virão das linhas serão jogados
+			 * nos atributos do cep, logradouro, complemento, bairro, localidade, numero,
+			 * uf, unidade, ibge e gia. Vale ressaltar que os nomes dos atributos precisam
+			 * ser iguais aos valores das linhas. Objetivo transformar o resultado para
+			 * dentro de um objeto para auxiliar a colocar os dados em tela.
+			 */
 			Pessoa gsonAux = new Gson().fromJson(jsonCep.toString(), Pessoa.class);
-			
-			/* Setar (atribuir) os valores que estão vindo para capturá-los e gerar na tela */
+
+			/*
+			 * Setar (atribuir) os valores que estão vindo para capturá-los e gerar na tela
+			 */
 			pessoa.setCep(gsonAux.getCep());
 			pessoa.setLogradouro(gsonAux.getLogradouro());
 			pessoa.setComplemento(gsonAux.getComplemento());
@@ -190,14 +210,20 @@ public class PessoaBean implements Serializable {
 			pessoa.setUnidade(gsonAux.getUnidade());
 			pessoa.setIbge(gsonAux.getIbge());
 			pessoa.setGia(gsonAux.getGia());
-			
-			
+
 			System.out.println(gsonAux);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMsg("Erro ao consultar o cep");
 		}
+	}
+
+	/* Chamando a lista de Estados da interface IDaoPessoa. Esse método vai ser chamado no selectItems
+	 * do arquivo primeirapagina.xhtml */
+	public List<SelectItem> getEstados() {
+		estados = iDaoPessoa.listaEstados();
+		return estados;
 	}
 
 	public Pessoa getPessoa() {
