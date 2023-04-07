@@ -124,7 +124,7 @@ public class PessoaBean implements Serializable {
 	/* Método deslogar usuário */
 	public String deslogar() {
 		
-		/* Para deslogar faz o mesmo processo, porém vamos usar o método remove para remover o usuarioLogado */
+		/* Para deslogar faz o mesmo processo, porém vamos usar o método remove da Class Map para remover o usuarioLogado */
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 		externalContext.getSessionMap().remove("usuarioLogado");

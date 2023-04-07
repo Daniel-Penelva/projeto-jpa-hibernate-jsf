@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<title>Cadastro de Usuários</title>
@@ -30,15 +31,15 @@
 			<h:outputLabel value="Nome:" />
 			<h:inputText value="#{pessoaBean.pessoa.nome}" required="true"
 				requiredMessage="Informe o nome do usuário"
-				validatorMessage="Entre com um nome válido">
+				validatorMessage="Entre com um nome válido" pt:placeholder="Informe nome">
 				<f:validateLength minimum="2" maximum="50" />
 			</h:inputText>
 
 			<h:outputLabel value="Sobrenome:" />
-			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" />
+			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" pt:placeholder="Informe sobrenome"/>
 
 			<h:outputLabel value="Idade:" />
-			<h:inputText value="#{pessoaBean.pessoa.idade}" />
+			<h:inputText value="#{pessoaBean.pessoa.idade}" pt:placeholder="Informe idade"/>
 
 
 			<h:outputLabel value="Sexo:" />
@@ -69,7 +70,7 @@
 			</h:selectManyMenu>
 			
 			<h:outputLabel value="CEP:" />
-			<h:inputText value="#{pessoaBean.pessoa.cep}">
+			<h:inputText value="#{pessoaBean.pessoa.cep}" pt:placeholder="Informe CEP">
 				<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}" render="logradouro complemento bairro localidade uf unidade ibge gia"/>
 			</h:inputText>
 			
@@ -102,7 +103,7 @@
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
 
 			<h:outputLabel value="Login:" />
-			<h:inputText value="#{pessoaBean.pessoa.login}" />
+			<h:inputText value="#{pessoaBean.pessoa.login}" pt:placeholder="Informe login"/>
 
 			<h:outputLabel value="Senha:" />
 			<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
