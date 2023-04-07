@@ -40,6 +40,8 @@ public class Pessoa implements Serializable {
 	private String nivelProgramador;
 	
 	private Integer[] linguagemProgramacao;
+	
+	private String cep;
 
 	public Long getId() {
 		return id;
@@ -152,6 +154,14 @@ public class Pessoa implements Serializable {
 
 	public void setLinguagemProgramacao(Integer[] linguagemProgramacao) {
 		this.linguagemProgramacao = linguagemProgramacao;
+	}
+	
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	/*

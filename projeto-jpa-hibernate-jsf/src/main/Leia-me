@@ -249,3 +249,45 @@ Os atributos locale e timeZone Vão fazer com que pegue a data real:
 OBS. converterMessage="Data Errada"
 É um validador de data para caso do usuário entrar com a data errada.
 
+---------------------------------------------------
+
+Consulta CEP (Web Service CEP)
+
+Com o JSF é diferente do JSP que usava um JQuery que retornava esse json e preenchia na tela.
+
+Passos com o JSF:
+1 - Preencher na tela com o JSF
+
+2 - Fazer um evento de perda de foco (quando é carregado para vc automaticamente os dados do CEP. No caso, é um  
+                                      método executado que carrega o CEP e que fica do lado do manegead bean)
+                                      
+3 - Mandar para o lado do back-end no manegead bean
+
+4 - Interceptar
+
+5 - Fazer a requisição pelo web service
+
+6 - Setar para os atributos do managead bean do objeto q o managead bean controla 
+
+7 - Mandar para a tela
+
+Parte 1
+Primeiro vamos colocar um campo de CEP na tela e fazer a ativaçao na hora que se perde o foco ao digitar o cep que
+vai ser executado um método de pesquisa de cep do lado do manegead bean, enviando o cep que foi digitado pelo usuário.
+
+<f:ajax event="blur" execute="@this" render="" listener="#{pessoaBean.pesquisaCep}"/>
+
+Propriedades:
+
+ -> event = é um evento de uma ação (clique de botão, entrada de foco ou mudança de valor etc). No caso, a perda de foco
+ no JSF é blur. Na perda de foco vai ser executado o ajax.
+ 
+ -> execute = Executa o componente InputText, ou seja, o @this seria o próprio componente que vai enviar os dados para o lado 
+ do managead bean.
+ 
+ -> render = Depois de consultar para o lado do managead bean, ou seja, depois de consultar o cep, irá setar os dados pelo objeto que 
+ vai mostrar os campos em tela carregados do CEP.
+ 
+ -> listener = é o método que vai ser executado que vai consultar o cep. O listener vai ser executado depois de perder o foco.
+
+

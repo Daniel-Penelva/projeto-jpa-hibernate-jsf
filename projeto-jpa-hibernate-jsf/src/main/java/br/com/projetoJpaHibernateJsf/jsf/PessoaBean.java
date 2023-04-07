@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -120,6 +121,12 @@ public class PessoaBean implements Serializable {
 		Pessoa pessoa = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
 		
 		return pessoa.getPerfilUser().equals(acesso);
+	}
+	
+	/* Método de pesquisa de CEP */
+	public void pesquisaCep(AjaxBehaviorEvent event) {
+		
+		System.out.println("Método pesquisa CEP chamado: " + pessoa.getCep());
 	}
 
 	public Pessoa getPessoa() {
