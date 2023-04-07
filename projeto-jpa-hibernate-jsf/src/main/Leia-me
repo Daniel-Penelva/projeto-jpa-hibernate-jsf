@@ -290,4 +290,5 @@ Propriedades:
  
  -> listener = é o método que vai ser executado que vai consultar o cep. O listener vai ser executado depois de perder o foco.
 
-
+------------------------------------------------
+Para deslogar o usuário basta acessar o mesmo 

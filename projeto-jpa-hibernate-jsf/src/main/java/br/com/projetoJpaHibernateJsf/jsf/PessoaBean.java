@@ -121,6 +121,24 @@ public class PessoaBean implements Serializable {
 		return "index.jsf";
 	}
 	
+	/* Método deslogar usuário */
+	public String deslogar() {
+		
+		/* Para deslogar faz o mesmo processo, porém vamos usar o método remove para remover o usuarioLogado */
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = context.getExternalContext();
+		externalContext.getSessionMap().remove("usuarioLogado");
+		
+		/* Acessar todo o contexto da requisição */
+		HttpServletRequest httpServletRequest = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
+		
+		/* Invalidar a sessão da requisição */
+		httpServletRequest.getSession().invalidate();
+		
+		/* Redireciona para a tela index.jsf*/
+		return "index.jsf";
+	}
+	
 	/* Mostrando e ocultando de acordo com o perfil do usuário */
 	public boolean permiteAcesso(String acesso) {
 		FacesContext context = FacesContext.getCurrentInstance();
