@@ -1,6 +1,11 @@
 package br.com.projetoJpaHibernateJsf.jsf;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +131,34 @@ public class PessoaBean implements Serializable {
 	/* Método de pesquisa de CEP */
 	public void pesquisaCep(AjaxBehaviorEvent event) {
 		
-		System.out.println("Método pesquisa CEP chamado: " + pessoa.getCep());
+		try {
+			/* Capturar a URL do cep lá no servidor para fazer o consumo */
+			URL url = new URL("https://viacep.com.br/ws/"+pessoa.getCep()+"/json/");
+			
+			/* Abrir uma conexão dessa url do cep */
+			URLConnection connection = url.openConnection();
+			
+			/* Obter o retorno dessa url, ou seja, dos dados da url */
+			InputStream is = connection.getInputStream();
+			
+			/* Esse retorno é jogado para dentro do Buffer que são classes para fazer leitura de fluxo de dados */
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			
+			/* Jogar esse retorno para dentro de uma String */
+			String cep = "";
+			StringBuilder jsonCep = new StringBuilder();
+			
+			/*Como ele vem na forma de uma string é preciso varrer todas as linhas dela */
+			while((cep = br.readLine()) != null){
+				jsonCep.append(cep);
+			}
+			
+			System.out.println(jsonCep);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mostrarMsg("Erro ao consultar o cep");
+		}
 	}
 
 	public Pessoa getPessoa() {
