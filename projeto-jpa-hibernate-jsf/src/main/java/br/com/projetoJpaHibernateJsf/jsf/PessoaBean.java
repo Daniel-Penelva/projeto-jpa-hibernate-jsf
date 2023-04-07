@@ -52,9 +52,16 @@ public class PessoaBean implements Serializable {
 	}
 
 	/*
-	 * Método para redirecionar na primeirapágina.xhtml e instanciar um novo usuário
+	 * Método para redirecionar na primeirapágina.xhtml e instanciar um novo usuário.
+	 * Executa algum processo antes do novo.
 	 */
 	public String novo() {
+		pessoa = new Pessoa();
+		return "";
+	}
+	
+	/* Executa algum processo antes de limpar */
+	public String limpar() {
 		pessoa = new Pessoa();
 		return "";
 	}
