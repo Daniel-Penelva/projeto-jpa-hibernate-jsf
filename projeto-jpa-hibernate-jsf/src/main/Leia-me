@@ -286,7 +286,7 @@ Propriedades:
  do managead bean.
  
  -> render = Depois de consultar para o lado do managead bean, ou seja, depois de consultar o cep, irá setar os dados pelo objeto que 
- vai mostrar os campos em tela carregados do CEP.
+ vai mostrar os campos em tela carregados do CEP. Ou seja, recarregar o objeto na tela.
  
  -> listener = é o método que vai ser executado que vai consultar o cep. O listener vai ser executado depois de perder o foco.
 
