@@ -251,7 +251,7 @@ OBS. converterMessage="Data Errada"
 
 ---------------------------------------------------
 
-Consulta CEP (Web Service CEP - link: https://viacep.com.br/)
+Consulta CEP (Web Service CEP - link: https://viacep.com.br/ ou https://viacep.com.br/ws/01001000/json/)
 
 Com o JSF é diferente do JSP que usava um JQuery que retornava esse json e preenchia na tela.
 

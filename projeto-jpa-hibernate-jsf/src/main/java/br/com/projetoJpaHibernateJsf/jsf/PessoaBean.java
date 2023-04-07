@@ -19,6 +19,8 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import br.com.projetoJpaHibernateJsf.dao.DaoGeneric;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
 import br.com.projetoJpaHibernateJsf.repository.IDaoPessoa;
@@ -148,12 +150,31 @@ public class PessoaBean implements Serializable {
 			String cep = "";
 			StringBuilder jsonCep = new StringBuilder();
 			
-			/*Como ele vem na forma de uma string é preciso varrer todas as linhas dela */
+			/*Como ele vem na forma de uma string é preciso varrer todas as linhas dela.
+			 * No caso, vão vir o cep, logradouro, complemento, numero, ... */
 			while((cep = br.readLine()) != null){
 				jsonCep.append(cep);
 			}
 			
-			System.out.println(jsonCep);
+			/* Iniciou um novo objeto gson, e os valores que virão das linhas serão jogados nos atributos
+			 * do cep, logradouro, complemento, bairro, localidade, numero, uf, unidade, ibge e gia. Vale 
+			 * ressaltar que os nomes dos atributos precisam ser iguais aos valores das linhas. 
+			 * Objetivo transformar o resultado para dentro de um objeto para auxiliar a colocar os dados em tela. */
+			Pessoa gsonAux = new Gson().fromJson(jsonCep.toString(), Pessoa.class);
+			
+			/* Setar (atribuir) os valores que estão vindo para capturá-los e gerar na tela */
+			pessoa.setCep(gsonAux.getCep());
+			pessoa.setLogradouro(gsonAux.getLogradouro());
+			pessoa.setComplemento(gsonAux.getComplemento());
+			pessoa.setBairro(gsonAux.getBairro());
+			pessoa.setLocalidade(gsonAux.getLocalidade());
+			pessoa.setUf(gsonAux.getUf());
+			pessoa.setUnidade(gsonAux.getUnidade());
+			pessoa.setIbge(gsonAux.getIbge());
+			pessoa.setGia(gsonAux.getGia());
+			
+			
+			System.out.println(gsonAux);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
