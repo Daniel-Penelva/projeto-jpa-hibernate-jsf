@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -57,6 +58,10 @@ public class Pessoa implements Serializable {
 	 * vai ser usado a anotação @Transient para que o hibernate não grave (não persistir) no BD. */
 	@Transient
 	private Estados estados;
+	
+	/* Muitas pessoas em uma cidade */
+	@ManyToOne
+	private Cidades cidades;
 
 	public Long getId() {
 		return id;
@@ -249,6 +254,14 @@ public class Pessoa implements Serializable {
 
 	public void setEstados(Estados estados) {
 		this.estados = estados;
+	}
+	
+	public Cidades getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(Cidades cidades) {
+		this.cidades = cidades;
 	}
 
 	/*

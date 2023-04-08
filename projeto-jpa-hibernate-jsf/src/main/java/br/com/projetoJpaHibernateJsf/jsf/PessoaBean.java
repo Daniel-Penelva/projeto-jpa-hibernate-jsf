@@ -23,7 +23,10 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 import br.com.projetoJpaHibernateJsf.dao.DaoGeneric;
+import br.com.projetoJpaHibernateJsf.entidade.Cidades;
+import br.com.projetoJpaHibernateJsf.entidade.Estados;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
+import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 import br.com.projetoJpaHibernateJsf.repository.IDaoPessoa;
 import br.com.projetoJpaHibernateJsf.repository.IDaoPessoaImpl;
 
@@ -41,6 +44,8 @@ public class PessoaBean implements Serializable {
 	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
 
 	private List<SelectItem> estados;
+	
+	private List<SelectItem> cidades;
 
 	/* Chamando o método merge do DaoGeneric */
 	public String salvar() {
@@ -233,9 +238,35 @@ public class PessoaBean implements Serializable {
 		
 		String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
 		
+		/* Vai cair no if o value (id do estado) e vamos add o valor numa variável */
 		if(codigoEstado != null) {
-			System.out.println(codigoEstado);
+			Estados estado = JPAUtil.getEntityManager().find(Estados.class, Long.parseLong(codigoEstado));
+			
+			/* Vai ser atribuido o valor no setEstados */
+			if(estado != null) {
+				pessoa.setEstados(estado);
+				
+				/*Lista de cidades */
+				List<Cidades> cidades = JPAUtil.getEntityManager().createQuery("from Cidades where estados.id = "+ codigoEstado).getResultList();
+				
+				List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
+				
+				/*Converter para uma lista de selectItems com os valores do id e do nome */
+				for (Cidades cidade : cidades) {
+					selectItemsCidades.add(new SelectItem(cidade.getId(), cidade.getNome()));
+				}
+				
+				setCidades(selectItemsCidades);
+			}
 		}
+	}
+	
+	public List<SelectItem> getCidades() {
+		return cidades;
+	}
+	
+	public void setCidades(List<SelectItem> cidades) {
+		this.cidades = cidades;
 	}
 
 	public Pessoa getPessoa() {

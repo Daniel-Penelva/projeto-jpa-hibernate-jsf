@@ -298,8 +298,7 @@ Para deslogar o usuário basta acessar o mesmo getSessionMap e fazer um remove, 
 Nessa parte 4 do combo dependentes, analisando: Na hora de selecionar o valor do Estado do combo, vai ser disparado um evento 
 pelo lado do servidor que vai ser recuperado o valor (o código do Estado) do Estado. Vai ser feito isso através do ajax que vai
 acionar esse evento de mudança ao lado do servidor e do managead bean, que vai capturar essa seleção de item (@This) e enviado 
-ao lado do servidor. Essa execução vai ser executada por um método através do 'listener'. Vamos capturar o valor através do
-objeto todo, logo, vai ser criado um 'var' e capturar esse objeto todo através do 'itemValue'.
+ao lado do servidor. Essa execução vai ser executada por um método através do 'listener'. 
 A propriedade 'immediate' é para deixar passar a fase de validação, ou seja, se tiver alguma fase de validação no formulário 
 o ajax não irá conseguir fazer funcionar por debaixo dos pano, portanto, sempre que for usar o ajax, usa-se o immediate.
 
