@@ -51,6 +51,9 @@ public class IDaoPessoaImpl implements IDaoPessoa{
 		/* Abrir uma transação com o BD */
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		
+		/* Abrir a transação */
+		entityTransaction.begin();
+		
 		/* Acessando a lista de estados (acessa a Classe Estados) */
 		List<Estados> estados = entityManager.createQuery("from Estados").getResultList();
 		

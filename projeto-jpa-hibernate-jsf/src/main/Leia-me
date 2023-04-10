@@ -307,3 +307,8 @@ o momento ainda não existe uma ação feito pelo o usuário para definir o valo
 a tag 'selectItem' e a propriedade 'itemLabel' para definir um valor definido na tela. Vale ressaltar que não podemos deixar 
 esse valor para que o usuário não selecione e que não salve no BD (não deixar disparar um evento), para isso vamos utilizar 
 a propriedade 'noSelectionOption'.
+
+Vamos criar um Coverter (um conversor) para usar nos selectOneMenu para poder enviar os dados de endereço. A função do converter
+é o seguinte, quando os dados vem do servidor para a tela (tudo em String) e quando é submetido para salvar o formulário, os dados
+são pegos e convertidos para objeto para ser setado no objeto pessoa e salvo no BD.
+
