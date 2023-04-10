@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -233,32 +234,29 @@ public class PessoaBean implements Serializable {
 	
 	/* Método que vai ser carregado na primeirapágina.xhtml */
 	public void carregaCidades(AjaxBehaviorEvent event) {
-		/*Para teste:
-		 * System.out.println(event.getComponent().getAttributes().get("submittedValue"));*/
 		
-		String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
+		/* Tem que chamar um evento do jsf com o casting HtlmSelectOneMenu para capturar o objeto 
+		 * inteiro que foi selecionado no combo Estados. A função do getSource é para converte para o 
+		 * elemento HtmlSelectOneMenu */
+		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
 		
-		/* Vai cair no if o value (id do estado) e vamos add o valor numa variável */
-		if(codigoEstado != null) {
-			Estados estado = JPAUtil.getEntityManager().find(Estados.class, Long.parseLong(codigoEstado));
-			
 			/* Vai ser atribuido o valor no setEstados */
 			if(estado != null) {
 				pessoa.setEstados(estado);
 				
 				/*Lista de cidades */
-				List<Cidades> cidades = JPAUtil.getEntityManager().createQuery("from Cidades where estados.id = "+ codigoEstado).getResultList();
+				List<Cidades> cidades = JPAUtil.getEntityManager().createQuery("from Cidades where estados.id = "+ estado.getId()).getResultList();
 				
 				List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
 				
-				/*Converter para uma lista de selectItems com os valores do id e do nome */
+				/* Converter para uma lista de selectItems com o objeto inteiro  */
 				for (Cidades cidade : cidades) {
-					selectItemsCidades.add(new SelectItem(cidade.getId(), cidade.getNome()));
+					selectItemsCidades.add(new SelectItem(cidade, cidade.getNome()));
 				}
 				
 				setCidades(selectItemsCidades);
 			}
-		}
+		
 	}
 	
 	public List<SelectItem> getCidades() {

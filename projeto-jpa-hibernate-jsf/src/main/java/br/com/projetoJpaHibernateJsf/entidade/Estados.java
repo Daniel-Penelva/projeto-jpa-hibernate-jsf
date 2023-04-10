@@ -61,10 +61,4 @@ public class Estados implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
-	@Override
-	public String toString() {
-		return getId().toString();
-	}
-	
-	
 }

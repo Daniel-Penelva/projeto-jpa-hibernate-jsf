@@ -13,7 +13,8 @@ import br.com.projetoJpaHibernateJsf.entidade.Cidades;
 import br.com.projetoJpaHibernateJsf.entidade.Estados;
 import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 
-@FacesConverter(forClass = Cidades.class)
+/* Tem que dizer qual é a classe e o valor que vai ser uma referência para a tela jsf */
+@FacesConverter(forClass = Cidades.class, value = "cidadeConverter")
 public class CidadeConverter implements Converter, Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -36,7 +37,13 @@ public class CidadeConverter implements Converter, Serializable{
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object cidade) {
 		
-		return ((Cidades) cidade).getId().toString();
+		if(cidade == null) {
+			return null;
+		}if(cidade instanceof Cidades) {
+			return ((Cidades) cidade).getId().toString();
+		}else {
+			return cidade.toString();
+		}
 	}
 
 }
