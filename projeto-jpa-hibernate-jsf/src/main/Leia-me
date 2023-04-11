@@ -312,3 +312,12 @@ Vamos criar um Coverter (um conversor) para usar nos selectOneMenu para poder en
 é o seguinte, quando os dados vem do servidor para a tela (tudo em String) e quando é submetido para salvar o formulário, os dados
 são pegos e convertidos para objeto para ser setado no objeto pessoa e salvo no BD.
 
+--------------------------------------------------
+
+Upload de miniaturas na tela, vamos precisar de uma coluna para gravar a imagem original e uma coluna para gravar a miniatura
+e de um campo para gravar a extensão (exemplo, jpg, png).
+
+Vai ser usado a base 64 que pega os arquivos e transforma em texto.
+
+
+
