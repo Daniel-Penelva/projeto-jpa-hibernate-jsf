@@ -319,5 +319,9 @@ e de um campo para gravar a extensão (exemplo, jpg, png).
 
 Vai ser usado a base 64 que pega os arquivos e transforma em texto.
 
+Bom saber sobre a propriedade:
+
+enctype="multipart/form-data" -> Significa que está fazendo um upload nesse formulário.
+
 
 

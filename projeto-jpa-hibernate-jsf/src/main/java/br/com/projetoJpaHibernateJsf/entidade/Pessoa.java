@@ -79,6 +79,7 @@ public class Pessoa implements Serializable {
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] fotoIconBase64Original;
+	
 
 	public Long getId() {
 		return id;

@@ -20,6 +20,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
@@ -47,10 +48,17 @@ public class PessoaBean implements Serializable {
 	private List<SelectItem> estados;
 	
 	private List<SelectItem> cidades;
+	
+	/* Criar um objeto para trazer esse arquivo de upload.
+	 * Como funciona:  Essa classe pega o arquivo selecionado e cria temporariamente ao lado do servidor para obter 
+	 * no nosso sistema.*/
+	private Part arquivoFoto;
 
 	/* Chamando o método merge do DaoGeneric */
 	public String salvar() {
 
+		System.out.println(arquivoFoto);
+		
 		pessoa = daoGeneric.merge(pessoa);
 		carregarPessoas();
 
@@ -311,4 +319,12 @@ public class PessoaBean implements Serializable {
 		this.pessoas = pessoas;
 	}
 
+	public Part getArquivoFoto() {
+		return arquivoFoto;
+	}
+
+	public void setArquivoFoto(Part arquivoFoto) {
+		this.arquivoFoto = arquivoFoto;
+	}
+	
 }
