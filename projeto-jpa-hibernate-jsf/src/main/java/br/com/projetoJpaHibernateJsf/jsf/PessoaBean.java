@@ -1,6 +1,9 @@
 package br.com.projetoJpaHibernateJsf.jsf;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
@@ -325,6 +328,39 @@ public class PessoaBean implements Serializable {
 
 	public void setArquivoFoto(Part arquivoFoto) {
 		this.arquivoFoto = arquivoFoto;
+	}
+	
+	/* Método que converter InputStream para array de bytes */
+	private byte[] getByte(InputStream is) throws IOException{
+		
+		int len;          //tamanho do arquivo
+		int size = 1024;  // tamanho do arquivo padrão
+		byte[] buf = null; // memória buffer (array do tipo byte)
+		
+		if(is instanceof ByteArrayInputStream) {
+			size = is.available();
+			buf = new byte[size];
+			len = is.read(buf, 0, size);
+			
+		}else {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			buf = new byte[size];
+			
+			
+			/*O método read() do InputStream retorna um valor inteiro que contém obyte correspondente que foi lido. 
+			 * Enquanto este valor lido for diferente de -1 significa que a leitura do Stream ainda não terminou. 
+			 * Então nós lemos repetidas vezes que o valor -1 seja atingido assim saberemos que a leitura terminou.
+			 * */
+			while((len = is.read(buf, 0, size)) != -1) {
+				bos.write(buf, 0, len);
+				
+				/* write(), tem a função de escrever em forma de bytes para o destino onde vai enviar.*/
+			}
+			
+			buf = bos.toByteArray();  // vai ficar na memória do buffer
+		}
+		
+		return buf;
 	}
 	
 }
