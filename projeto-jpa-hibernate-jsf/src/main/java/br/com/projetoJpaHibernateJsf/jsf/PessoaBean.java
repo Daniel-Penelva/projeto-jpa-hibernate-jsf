@@ -1,5 +1,7 @@
 package br.com.projetoJpaHibernateJsf.jsf;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,9 +23,11 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 
 import com.google.gson.Gson;
 
@@ -56,11 +60,54 @@ public class PessoaBean implements Serializable {
 	 * Como funciona:  Essa classe pega o arquivo selecionado e cria temporariamente ao lado do servidor para obter 
 	 * no nosso sistema.*/
 	private Part arquivoFoto;
+	
+	private JPAUtil jpaUtil;
 
 	/* Chamando o método merge do DaoGeneric */
-	public String salvar() {
+	public String salvar() throws IOException {
+		
+		System.out.println("chamando método salvar");
 
-		System.out.println(arquivoFoto);
+		/* Processar imagem */
+		byte[] imagemByte = getByte(arquivoFoto.getInputStream());
+		
+		/* atribui na pessoa o valor da imagemByte, salvando a imagem original */
+		pessoa.setFotoIconBase64Original(imagemByte);
+		
+		/* Criando uma miniatura dessa imagem */
+		/* Transformar em bufferImage */
+		BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
+		
+		/* Captura o tipo da imagem */
+		int type = bufferedImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
+		
+		/* Definindo o tamanho da imagem */
+		int largura = 200;
+		int altura = 200;
+		
+		/* Criar a miniatura */
+		BufferedImage resizedImage = new BufferedImage(largura, altura, type);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(bufferedImage, 0, 0, largura, altura, null);
+		g.dispose();
+		
+		/* Escrever novamente a imagem em tamanho menor */
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		/* Precisa saber a extensão da imagem - ela retorna assim: imagem/png */
+		String extensao = arquivoFoto.getContentType().split("\\/")[1];
+		
+		/* Escreve em forma de bytes para o destino onde vai enviar.*/
+		ImageIO.write(resizedImage, extensao, baos);
+		
+		/* Obter a miniatura - recebe como padrão esse formato: "data:image/png;base64," 
+		 * Isso 'DatatypeConverter.printBase64Binary(baos.toByteArray()' coverte a miniatura em base64 */
+		String miniaturaImage = "data:" + arquivoFoto.getContentType() + ";base64," + 
+		 DatatypeConverter.printBase64Binary(baos.toByteArray());
+		
+		/* Com a imagem processada vai ter como setar a base64 e extensão da imagem */
+		pessoa.setFotoIconBase64(miniaturaImage);
+		pessoa.setExtensao(extensao);
 		
 		pessoa = daoGeneric.merge(pessoa);
 		carregarPessoas();
@@ -249,14 +296,14 @@ public class PessoaBean implements Serializable {
 		/* Tem que chamar um evento do jsf com o casting HtlmSelectOneMenu para capturar o objeto 
 		 * inteiro que foi selecionado no combo Estados. A função do getSource é para converte para o 
 		 * elemento HtmlSelectOneMenu */
-		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
+		Estados estado = (Estados) ((HtmlSelectOneMenu)event.getSource()).getValue();
 		
 			/* Vai ser atribuido o valor no setEstados */
 			if(estado != null) {
 				pessoa.setEstados(estado);
 				
 				/*Lista de cidades */
-				List<Cidades> cidades = JPAUtil.getEntityManager().createQuery("from Cidades where estados.id = "+ estado.getId()).getResultList();
+				List<Cidades> cidades = jpaUtil.getEntityManager().createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
 				
 				List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
 				
@@ -271,13 +318,13 @@ public class PessoaBean implements Serializable {
 	}
 	
 	/* Método editar Estado e Cidade */
-	public void editar() {
+	public String editar() {
 		if(pessoa.getCidades() != null) {
 			Estados estado = pessoa.getCidades().getEstados();
 			pessoa.setEstados(estado);
 			
 			/*Lista de cidades */
-			List<Cidades> cidades = JPAUtil.getEntityManager().createQuery("from Cidades where estados.id = "+ estado.getId()).getResultList();
+			List<Cidades> cidades = jpaUtil.getEntityManager().createQuery("from Cidades where estados.id = "+ estado.getId()).getResultList();
 			
 			List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
 			
@@ -288,6 +335,7 @@ public class PessoaBean implements Serializable {
 			
 			setCidades(selectItemsCidades);
 		}
+		return "";
 	}
 	
 	public List<SelectItem> getCidades() {

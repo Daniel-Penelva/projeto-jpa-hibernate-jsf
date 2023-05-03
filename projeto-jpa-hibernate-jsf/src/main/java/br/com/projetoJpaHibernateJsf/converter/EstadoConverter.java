@@ -38,7 +38,6 @@ public class EstadoConverter implements Converter, Serializable{
 	public String getAsString(FacesContext context, UIComponent component, Object estado) {
 		
 		if(estado == null) {
-			/* Não te o que fazer retorna null */
 			return null;
 			
 		}if(estado instanceof Estados) {
