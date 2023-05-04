@@ -449,3 +449,39 @@ cliente.
 Para saber se as configurações estão rodando corretamente no banco de dados:
 
 Vai até o seu banco de dados, seleciona o database do projeto vai em: tools > server status 
+
+-----------------------------------------------------------
+
+Bean Validation 
+
+A API de bean validation fornece uma facilidade para validar objetos em diferentes camadas da aplicação.
+JavaServer Faces (JSF) integra com esta tecnologia para validar objetos preenchidos pelas páginas que criamos.
+
+A vantagem de usar bean validation é que as restrições ficam inseridas nas classes de modelo, e não em páginas XHTML, 
+por isso podem ser usadas por outras camadas camadas da aplicação.
+
+As restrições de bean validation são em forma de anotações que serão trabalhadas em cima dos atributos da nossa entidade.
+
+O Bean Validation padroniza como definir e declarar restrições de nível de modelo de domínio. Você pode, por exemplo, 
+expressar que uma propriedade nunca deve ser nula, que o saldo da conta deve ser estritamente positivo, etc.
+
+Essas restrições de modelo de domínio são declaradas no próprio bean anotando suas propriedades. O Bean Validation 
+pode então lê-los e verificar se há violações de restrição. O mecanismo de validação pode ser executado em diferentes
+camadas em seu aplicativo sem ter que duplicar nenhuma dessas regras (camada de apresentação, camada de acesso a dados). Seguindo o princípio DRY, Bean
+
+Validation e sua implementação de referência, o Hibernate Validator foi desenvolvido para essa finalidade.
+
+A integração entre o Hibernate e o Bean Validation funciona em dois níveis.
+  
+  -> Primeiro, é capaz de verificar instâncias na memória de uma classe para violações de restrição. 
+  
+  -> Segundo, ele pode aplicar as restrições ao metamodelo do Hibernate e incorporá-las ao esquema do banco de dados gerado. 
+     
+Cada anotação de restrição é associada a uma implementação de validador responsável por verificar a restrição na 
+instância da entidade. Um validador também pode (opcionalmente) aplicar a restrição ao metamodelo do Hibernate, 
+permitindo que o Hibernate gere DDL que expressa a restrição. Com o ouvinte de eventos apropriado, você pode executar 
+a operação de verificação em inserções, atualizações e exclusões feitas pelo Hibernate. 
+     
+Ao verificar instâncias em tempo de execução, o Hibernate Validator retorna informações sobre violações de restrições 
+em um conjunto de ConstraintViolations.
+ 
