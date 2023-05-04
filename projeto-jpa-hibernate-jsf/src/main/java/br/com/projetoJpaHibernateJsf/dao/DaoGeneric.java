@@ -128,4 +128,21 @@ public class DaoGeneric<E> {
 		
 		return retorno;
 	}
+	
+	//Consultar o objeto pessoa para que possa ser executado o download do arquivo imagem.
+	public E consultar(Class<E> entidade, String primaryKey) {
+		
+		EntityManager entityManager = JPAUtil.getEntityManager();
+
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+
+		entityTransaction.begin();
+		
+		// Lembrando que temos que passar o id com o tipo Long
+		E objeto = (E) entityManager.find(entidade, Long.parseLong(primaryKey));
+		
+		entityTransaction.commit();
+		
+		return objeto;
+	}
 }

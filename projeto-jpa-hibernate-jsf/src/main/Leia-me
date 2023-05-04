@@ -404,6 +404,20 @@ mas qualquer tipo de dado, usamos a leitura de texto apenas para facilitar o ent
 utilizados. Assim como o InputStream, o OutputStream é uma classe Abstrata que precisa de uma implementação concreta.
 
 
+-----------------------------------------------------------
 
+Para fazer download da imagem vamos utilizar um 'actionListener' que executa e que vai para o servidor e volta sem 
+precisar redirecionar, diferente do action que redireciona.
+
+É preciso passar um parametro (param) para capturar o id do usuario que estamos baixando o arquivo. Esse parametro que 
+é o código do usuario vai ser passado no método download para resgatar essa imagem.
+Exemplificando: <f:param name="fileDownloadId" value="#{p.id}"/>
+
+Dentro do método download vamos utilizar um Map porque dentro do jsf é possível saber tudo que vem da requisição.
+Vamos carregar o id do parametro por meio do get() para recuperar a imagem da pessoa.
+
+Vai ser preciso recuperar o objeto pessoa por inteiro, logo vamos ter que criar um método no dao para consultar a pessoa.
+ 
+ 
 
 

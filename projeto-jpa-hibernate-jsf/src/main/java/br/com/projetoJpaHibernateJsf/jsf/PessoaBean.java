@@ -13,6 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -25,6 +26,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
@@ -409,6 +411,40 @@ public class PessoaBean implements Serializable {
 		}
 		
 		return buf;
+	}
+	
+	public void download() throws IOException {
+		
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String fileDownloadId = params.get("fileDownloadId");
+		//System.out.println(fileDownloadId);
+		
+		Pessoa pessoa = daoGeneric.consultar(Pessoa.class, fileDownloadId);
+		//System.out.println(pessoa);
+		
+		/* Parte de codificação para fazer o download da imagem */
+		//Resposta para o nosso navegador
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+		
+		// Seta o cabeçalho, o tipo e tamanho dos dados. Dentro do parametro e sempre esse valor 'Content-Disposition'
+		// e como é um arquivo o segundo parametro vai ser sempre "attachment; filename=download." e a extensão do arquivo.
+		response.addHeader("Content-Disposition", "attachment; filename=download." + pessoa.getExtensao());
+		
+		//Define o formato da mídia, por exemplo, imagem,video,etc...
+		response.setContentType("application/octet-stream");
+		
+		// Tamanho do arquivo que vai ser retornado
+		response.setContentLength(pessoa.getFotoIconBase64Original().length);
+		
+		// Define o fluxo de saída da resposta
+		response.getOutputStream().write(pessoa.getFotoIconBase64Original());
+		
+		// Confirmar essa resposta de fluxo de dados, ou seja, escreve essa resposta
+		response.getOutputStream().flush();
+		
+		// Fala para o JSF que a resposta está completa
+		FacesContext.getCurrentInstance().responseComplete();
+		
 	}
 	
 }
