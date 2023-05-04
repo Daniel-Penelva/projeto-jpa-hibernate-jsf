@@ -419,5 +419,33 @@ Vamos carregar o id do parametro por meio do get() para recuperar a imagem da pe
 Vai ser preciso recuperar o objeto pessoa por inteiro, logo vamos ter que criar um método no dao para consultar a pessoa.
  
  
+-----------------------------------------------------------
+
+Pool de conexão com c3pO com JPA
+Mas o que faz o pool? Basicamente, ele mantém certo número de conexões abertas com o banco de dados. 
+Quando o cliente java abre uma conexão usando o pool, ao invés de abrir uma nova conexão com o banco usando o driver
+JDBC, este simplesmente pega uma das conexões que ele já mantinha aberta com o banco e a marca como alocada para aquele
+cliente.
 
 
+           Porta           Vários Clientes
+      
+      Pool de conexões  <--------------------- 1
+       com 5 sessões    <--------------------- 2
+            |           <--------------------- 3
+            |           <--------------------- 4
+            |                                  .
+            v                                  .
+      Banco de Dados                           .
+                                               n
+                                               
+ Características:
+  - Melhora a velocidade do sistema
+  - Evita conexões presas
+  - Monitora conexões não usadas
+  - Melhora a perfomance
+  - Gerência transações de banco
+  
+Para saber se as configurações estão rodando corretamente no banco de dados:
+
+Vai até o seu banco de dados, seleciona o database do projeto vai em: tools > server status 
