@@ -488,3 +488,36 @@ em um conjunto de ConstraintViolations.
  ---------------------------------------------
  actionListener não faz o redirecionamento e ele faz a ação antes do action. Lembrando que o action você chama e pode fazer 
  o redirecionamento para outra página.
+ 
+ -----------------------------------------------------------
+ 
+Injeção de Dependencia (CDI)
+ 
+ A Injeção de Dependência e Contextos (CDI), especificada por JSR-299, é parte integrante do Java EE 6 e fornece uma arquitetura que 
+ permite aos componentes do Java EE, como os servlets, enterprise beans e JavaBeans, existirem dentro do ciclo de vida de uma aplicação 
+ com escopos bem definidos. Além disso, os serviços CDI permitem que os componentes do Java EE, como beans de sessão EJB e beans 
+ gerenciados do JavaServer Faces (JSF), sejam injetados e interajam de maneira acoplada flexível, disparando e observando eventos.
+ 
+Como injeto uma dependência?
+A dependência é injetada à classe que a utiliza, ou seja, obrigatoriamente ela precisa ser externa a essa classe. Isso quer dizer que, 
+para que haja uma injeção de dependência, a instanciação de um objeto não deve se dar dentro da classe, mas do lado de fora dela e então, 
+injetada.
+
+Quando habilitamos o CDI, praticamente todas as classes do projeto são consideradas Managed Beans e, portanto, passíveis de injeção e de 
+serem injetadas. Podemos usar com CDI toda classe pública com um construtor público padrão ou algum que receba parâmetros e esteja anotado 
+com @Inject.
+
+A anotação @Inject é considerada a base de todo o CDI, pois ela permite a injeção de dependência e deve ser usada nos pontos em que 
+desejamos a injeção automática, seja construtores, setters ou atributos privados.
+
+Uma solicitação para uma injeção não necessita saber sobre o ciclo de vida real, implementação concreta, modelos de threads, ou outros de 
+clientes do bean. Essa combinação de tipagem forte e baixo acoplamento nos remete a um código mais fácil de manter. O bean injetado tem um 
+ciclo de vida bem definido. O bean injetado também é chamado de uma instância contextual, pois é sempre injetado num contexto. Praticamente 
+qualquer POJO pode ser injetado como um bean CDI. Isto inclui EJBs, recursos JNDI, classes de entidade, unidades de persistência e contextos. 
+Mesmo os objetos que foram criados anteriormente por um factory method (método de fábrica) podem agora ser facilmente injetados. O CDI 
+também permite que componentes EJB possam ser usados, como JSF Managed Beans, fazendo uma ponte entre a camada transacional e a camada web.
+
+Qual problema a injeção de dependência resolve?
+Injeção de Dependência é um padrão de projeto que ajuda muito a deixar o código desacoplado, melhora a legibilidade e interpretação do 
+código, melhora a distribuição de responsabilidades entre as classes e facilita a manutenção do código.
+ 
