@@ -1,9 +1,8 @@
 package br.com.projetoJpaHibernateJsf.entidade;
 
 import java.io.Serializable;
-
-import java.util.Objects;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,9 +16,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
+import org.hibernate.validator.constraints.br.TituloEleitoral;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -30,11 +34,16 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@NotEmpty
+	@Size(min = 1, max = 50, message = "Nome dve ter entre 2 e 50 letras")
 	private String nome;
 	
-	@NotEmpty(message = "Informe o sobrenome!")
+	@NotEmpty
 	@NotNull(message = "Informe o sobrenome!")
 	private String sobrenome;
+	
+	@DecimalMax(value = "50", message = "Idade tem que ser menor que 50 anos")
+	@DecimalMin(value = "17", message ="Idade tem que ser maior que 18 anos" )
 	private int idade;
 
 	@Temporal(TemporalType.DATE)
@@ -85,7 +94,6 @@ public class Pessoa implements Serializable {
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] fotoIconBase64Original;
-	
 
 	public Long getId() {
 		return id;

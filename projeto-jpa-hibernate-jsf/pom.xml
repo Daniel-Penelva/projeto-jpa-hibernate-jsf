@@ -20,7 +20,8 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.2-1003-jdbc4</version>
+	    	<version>9.2-1003-jdbc4</version> 
+	        <scope>compile</scope>
 		</dependency>
 
 		<dependency>

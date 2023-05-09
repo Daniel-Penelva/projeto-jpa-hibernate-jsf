@@ -44,7 +44,6 @@
 			<h:outputLabel value="Idade:" />
 			<h:inputText value="#{pessoaBean.pessoa.idade}" pt:placeholder="Informe idade"/>
 
-
 			<h:outputLabel value="Sexo:" />
 			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
 				required="false">
@@ -164,7 +163,7 @@
 				<h:commandButton value="Novo" id="botaoNovo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo" >
 					<f:ajax execute="botaoNovo" render="@form"/>
 				</h:commandButton>
-				<h:commandButton style="margin-left:1cm;" value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" />
+				<h:commandButton style="margin-left:1cm;" value="Salvar" actionListener="#{pessoaBean.registraLog}" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" />
 				<h:commandButton style="margin-left:1cm;" value="Remover" action="#{pessoaBean.remove}" image="/resources/img/remover.png" title="Remover" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}" />
 				<h:commandButton style="margin-left:1cm;" value="Limpar" id="botaoLimpar" action="#{pessoaBean.limpar}" image="/resources/img/limpar.png" title="Limpar">
 					<f:ajax execute="botaoLimpar" render="@form"/>

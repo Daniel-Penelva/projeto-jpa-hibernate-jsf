@@ -485,3 +485,6 @@ a operação de verificação em inserções, atualizações e exclusões feitas
 Ao verificar instâncias em tempo de execução, o Hibernate Validator retorna informações sobre violações de restrições 
 em um conjunto de ConstraintViolations.
  
+ ---------------------------------------------
+ actionListener não faz o redirecionamento e ele faz a ação antes do action. Lembrando que o action você chama e pode fazer 
+ o redirecionamento para outra página.

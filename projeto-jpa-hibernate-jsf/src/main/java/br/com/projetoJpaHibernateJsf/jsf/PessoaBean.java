@@ -119,6 +119,10 @@ public class PessoaBean implements Serializable {
 		/* Vai retornar o valor na mesma página, no caso, primeirapagina.xhtml */
 		return "";
 	}
+	
+	public void registraLog() {
+		System.out.println("Método registra Log");
+	}
 
 	private void mostrarMsg(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
