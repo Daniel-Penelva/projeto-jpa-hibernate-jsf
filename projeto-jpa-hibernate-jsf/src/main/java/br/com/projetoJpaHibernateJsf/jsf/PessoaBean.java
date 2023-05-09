@@ -23,6 +23,7 @@ import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +69,7 @@ public class PessoaBean implements Serializable {
 	/* Chamando o método merge do DaoGeneric */
 	public String salvar() throws IOException {
 		
-		System.out.println("chamando método salvar");
+		//System.out.println("chamando método salvar");
 
 		/* Processar imagem */
 		byte[] imagemByte = getByte(arquivoFoto.getInputStream());
@@ -122,6 +123,16 @@ public class PessoaBean implements Serializable {
 	
 	public void registraLog() {
 		System.out.println("Método registra Log");
+	}
+	
+	public void mudancaDeValorNome(ValueChangeEvent evento) {
+		System.out.println("Valor antigo :" + evento.getOldValue());
+		System.out.println("Valor novo :" + evento.getNewValue());
+	}
+	
+	public void mudancaDeValorSobrenome(ValueChangeEvent evento) {
+		System.out.println("Valor antigo :" + evento.getOldValue());
+		System.out.println("Valor novo :" + evento.getNewValue());
 	}
 
 	private void mostrarMsg(String msg) {

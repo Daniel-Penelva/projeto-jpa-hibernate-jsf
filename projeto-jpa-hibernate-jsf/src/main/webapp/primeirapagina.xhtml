@@ -32,14 +32,14 @@
 			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}"></h:inputFile>
 
 			<h:outputLabel value="Nome:" />
-			<h:inputText value="#{pessoaBean.pessoa.nome}" required="true"
+			<h:inputText value="#{pessoaBean.pessoa.nome}" valueChangeListener="#{pessoaBean.mudancaDeValorNome}" required="true"
 				requiredMessage="Informe o nome do usuário"
 				validatorMessage="Entre com um nome válido" pt:placeholder="Informe nome">
 				<f:validateLength minimum="2" maximum="50" />
 			</h:inputText>
 
 			<h:outputLabel value="Sobrenome:" />
-			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" pt:placeholder="Informe sobrenome"/>
+			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" valueChangeListener="#{pessoaBean.mudancaDeValorSobrenome}" pt:placeholder="Informe sobrenome"/>
 
 			<h:outputLabel value="Idade:" />
 			<h:inputText value="#{pessoaBean.pessoa.idade}" pt:placeholder="Informe idade"/>
