@@ -17,8 +17,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -27,7 +25,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,21 +40,23 @@ import br.com.projetoJpaHibernateJsf.entidade.Estados;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
 import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 import br.com.projetoJpaHibernateJsf.repository.IDaoPessoa;
-import br.com.projetoJpaHibernateJsf.repository.IDaoPessoaImpl;
 
-@ViewScoped
-@ManagedBean(name = "pessoaBean")
+@javax.faces.view.ViewScoped
+@Named(value = "pessoaBean")
 public class PessoaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Pessoa pessoa = new Pessoa();
-	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
+	
+	@Inject
+	private DaoGeneric<Pessoa> daoGeneric;
 
-	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
-
-	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
-
+	@Inject
+	private IDaoPessoa iDaoPessoa;
+	
+    private List<Pessoa> pessoas = new ArrayList<Pessoa>();
+    
 	private List<SelectItem> estados;
 	
 	private List<SelectItem> cidades;
@@ -66,6 +66,7 @@ public class PessoaBean implements Serializable {
 	 * no nosso sistema.*/
 	private Part arquivoFoto;
 	
+	@Inject
 	private JPAUtil jpaUtil;
 
 	/* Chamando o método merge do DaoGeneric */
@@ -310,6 +311,7 @@ public class PessoaBean implements Serializable {
 	}
 	
 	/* Método que vai ser carregado na primeirapágina.xhtml */
+	@SuppressWarnings("unchecked")
 	public void carregaCidades(AjaxBehaviorEvent event) {
 		
 		/* Tem que chamar um evento do jsf com o casting HtlmSelectOneMenu para capturar o objeto 
@@ -337,6 +339,7 @@ public class PessoaBean implements Serializable {
 	}
 	
 	/* Método editar Estado e Cidade */
+	@SuppressWarnings("unchecked")
 	public String editar() {
 		if(pessoa.getCidades() != null) {
 			Estados estado = pessoa.getCidades().getEstados();

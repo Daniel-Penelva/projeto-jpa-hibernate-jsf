@@ -1,5 +1,6 @@
 package br.com.projetoJpaHibernateJsf.repository;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,7 +11,9 @@ import javax.persistence.EntityTransaction;
 import br.com.projetoJpaHibernateJsf.entidade.Lancamento;
 
 @Named
-public class IDaoLancamentoImpl implements IDaoLancamento {
+public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	private EntityManager entityManager;

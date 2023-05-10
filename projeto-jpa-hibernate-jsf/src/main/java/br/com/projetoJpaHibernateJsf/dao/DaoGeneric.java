@@ -1,5 +1,6 @@
 package br.com.projetoJpaHibernateJsf.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,8 +11,10 @@ import javax.persistence.EntityTransaction;
 import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 
 @Named
-public class DaoGeneric<E> {
+public class DaoGeneric<E> implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Inject
 	private EntityManager entityManager;
 	

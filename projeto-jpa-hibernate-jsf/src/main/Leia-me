@@ -497,6 +497,7 @@ Injeção de Dependencia (CDI)
  permite aos componentes do Java EE, como os servlets, enterprise beans e JavaBeans, existirem dentro do ciclo de vida de uma aplicação 
  com escopos bem definidos. Além disso, os serviços CDI permitem que os componentes do Java EE, como beans de sessão EJB e beans 
  gerenciados do JavaServer Faces (JSF), sejam injetados e interajam de maneira acoplada flexível, disparando e observando eventos.
+ Portanto, a CDI são usados em Daos (em partes de persistencia) e Controllers (servlet).
  
 Como injeto uma dependência?
 A dependência é injetada à classe que a utiliza, ou seja, obrigatoriamente ela precisa ser externa a essa classe. Isso quer dizer que, 
@@ -520,4 +521,6 @@ também permite que componentes EJB possam ser usados, como JSF Managed Beans, f
 Qual problema a injeção de dependência resolve?
 Injeção de Dependência é um padrão de projeto que ajuda muito a deixar o código desacoplado, melhora a legibilidade e interpretação do 
 código, melhora a distribuição de responsabilidades entre as classes e facilita a manutenção do código.
+
+OBS. Para o CDI funcionar sem esses erros faltou você implementar a interface Serializable nas classes que utilizam a anotação @Named.
  

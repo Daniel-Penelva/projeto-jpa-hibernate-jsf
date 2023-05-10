@@ -1,5 +1,6 @@
 package br.com.projetoJpaHibernateJsf.repository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,13 @@ import br.com.projetoJpaHibernateJsf.entidade.Estados;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
 
 @Named
-public class IDaoPessoaImpl implements IDaoPessoa{
+public class IDaoPessoaImpl implements IDaoPessoa, Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	private EntityManager entityManager;
-
+	
 	@Override
 	public Pessoa consultarUsuario(String login, String senha) {
 
@@ -44,12 +47,6 @@ public class IDaoPessoaImpl implements IDaoPessoa{
 		/* Declarando uma lista de SelectItem */
 		List<SelectItem> selectItems = new ArrayList<SelectItem>();
 		
-		/* Abrir uma transação com o BD */
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-		
-		/* Abrir a transação */
-		entityTransaction.begin();
-		
 		/* Acessando a lista de estados (acessa a Classe Estados) */
 		List<Estados> estados = entityManager.createQuery("from Estados").getResultList();
 		
@@ -59,7 +56,6 @@ public class IDaoPessoaImpl implements IDaoPessoa{
 			 * para conseguir enviar para a camada de modelo. */
 			selectItems.add(new SelectItem(estado, estado.getNome()));
 		}
-				
 				
 		return selectItems;
 	}

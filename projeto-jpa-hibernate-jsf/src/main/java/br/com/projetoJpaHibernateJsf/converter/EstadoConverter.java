@@ -2,15 +2,14 @@ package br.com.projetoJpaHibernateJsf.converter;
 
 import java.io.Serializable;
 
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 import br.com.projetoJpaHibernateJsf.entidade.Estados;
-import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 
 /* Tem que dizer qual é a classe e o valor que vai ser uma referência para a tela jsf */
 @FacesConverter(forClass = Estados.class, value = "estadoConverter")
@@ -23,9 +22,7 @@ public class EstadoConverter implements Converter, Serializable{
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String codigoEstado) {
 		
-		EntityManager entityManager = JPAUtil.getEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-		entityTransaction.begin();
+		EntityManager entityManager = CDI.current().select(EntityManager.class).get();
 		
 		Estados estados = (Estados) entityManager.find(Estados.class, Long.parseLong(codigoEstado));
 		
