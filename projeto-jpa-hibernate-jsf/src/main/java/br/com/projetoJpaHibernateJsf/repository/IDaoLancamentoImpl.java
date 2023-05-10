@@ -2,20 +2,23 @@ package br.com.projetoJpaHibernateJsf.repository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import br.com.projetoJpaHibernateJsf.entidade.Lancamento;
-import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 
+@Named
 public class IDaoLancamentoImpl implements IDaoLancamento {
+	
+	@Inject
+	private EntityManager entityManager;
 
 	@Override
 	public List<Lancamento> consultar(Long codUser) {
 		
 		List<Lancamento> lista = null;
-		
-		EntityManager entityManager = JPAUtil.getEntityManager();
 		
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
@@ -23,7 +26,6 @@ public class IDaoLancamentoImpl implements IDaoLancamento {
 		lista = entityManager.createQuery("FROM Lancamento WHERE usuario.id= " + codUser).getResultList();
 		
 		transaction.commit();
-		entityManager.close();
 		
 		return lista;
 	}

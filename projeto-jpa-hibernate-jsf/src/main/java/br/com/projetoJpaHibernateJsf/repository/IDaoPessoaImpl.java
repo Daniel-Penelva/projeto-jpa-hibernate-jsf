@@ -4,22 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import br.com.projetoJpaHibernateJsf.entidade.Estados;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
-import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 
+@Named
 public class IDaoPessoaImpl implements IDaoPessoa{
+	
+	@Inject
+	private EntityManager entityManager;
 
 	@Override
 	public Pessoa consultarUsuario(String login, String senha) {
 
 		Pessoa pessoa = null;
-
-		/* Criando um entityManager */
-		EntityManager entityManager = JPAUtil.getEntityManager();
 
 		/* Abrir uma transação com o BD */
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -32,9 +34,6 @@ public class IDaoPessoaImpl implements IDaoPessoa{
 		/* Vai fazer um commit da transação */
 		entityTransaction.commit();
 
-		/* Fecha o entityManager */
-		entityManager.close();
-
 		return pessoa;
 	}
 
@@ -44,9 +43,6 @@ public class IDaoPessoaImpl implements IDaoPessoa{
 		
 		/* Declarando uma lista de SelectItem */
 		List<SelectItem> selectItems = new ArrayList<SelectItem>();
-		
-		/* Criando um entityManager */
-		EntityManager entityManager = JPAUtil.getEntityManager();
 		
 		/* Abrir uma transação com o BD */
 		EntityTransaction entityTransaction = entityManager.getTransaction();
