@@ -3,6 +3,7 @@ package br.com.projetoJpaHibernateJsf.filter;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -20,6 +21,7 @@ import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 @WebFilter(urlPatterns = {"/*"})
 public class FilterAutenticacao implements Filter{
 	
+	@Inject
 	private JPAUtil jpaUtil;
 	
 	@Override
