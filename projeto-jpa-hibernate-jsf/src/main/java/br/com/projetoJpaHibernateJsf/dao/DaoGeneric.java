@@ -2,17 +2,23 @@ package br.com.projetoJpaHibernateJsf.dao;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 
+@Named
 public class DaoGeneric<E> {
+	
+	@Inject
+	private EntityManager entityManager;
+	
+	@Inject
+	private JPAUtil jpaUtil;
 
 	public void salvar(E entidade) {
-
-		/* Criando um entityManager */
-		EntityManager entityManager = JPAUtil.getEntityManager();
 
 		/* Abrir uma transação com o BD */
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -25,15 +31,9 @@ public class DaoGeneric<E> {
 
 		/* Vai fazer um commit da transação */
 		entityTransaction.commit();
-
-		/* Fecha o entityManager */
-		entityManager.close();
 	}
 
 	public E merge(E entidade) {
-
-		/* Criando um entityManager */
-		EntityManager entityManager = JPAUtil.getEntityManager();
 
 		/* Abrir uma transação com o BD */
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -50,16 +50,10 @@ public class DaoGeneric<E> {
 		/* Vai fazer um commit da transação */
 		entityTransaction.commit();
 
-		/* Fecha o entityManager */
-		entityManager.close();
-
 		return retornoEntidade;
 	}
 
 	public void deletar(E entidade) {
-
-		/* Criando um entityManager */
-		EntityManager entityManager = JPAUtil.getEntityManager();
 
 		/* Abrir uma transação com o BD */
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -72,15 +66,9 @@ public class DaoGeneric<E> {
 
 		/* Vai fazer um commit da transação */
 		entityTransaction.commit();
-
-		/* Fecha o entityManager */
-		entityManager.close();
 	}
 
 	public void deletarPorId(E entidade) {
-
-		/* Criando um entityManager */
-		EntityManager entityManager = JPAUtil.getEntityManager();
 
 		/* Abrir uma transação com o BD */
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -89,7 +77,7 @@ public class DaoGeneric<E> {
 		entityTransaction.begin();
 
 		/* Chama o método getPrimaryKey da classe JPAUtil */
-		Object id = JPAUtil.getPrimaryKet(entidade);
+		Object id = jpaUtil.getPrimaryKet(entidade);
 
 		/*
 		 * Vai capturar o EntityManager e remover no BD as propriedades da entidade.
@@ -108,8 +96,6 @@ public class DaoGeneric<E> {
 
 	@SuppressWarnings("unchecked")
 	public List<E> getListEntity(Class<E> entidade) {
-		/* Criando um entityManager */
-		EntityManager entityManager = JPAUtil.getEntityManager();
 
 		/* Abrir uma transação com o BD */
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -117,14 +103,10 @@ public class DaoGeneric<E> {
 		/* iniciar a Transação */
 		entityTransaction.begin();
 		
-	
 		List<E> retorno = entityManager.createQuery("from " + entidade.getName()).getResultList();
 		
 		/* Vai fazer um commit da transação */
 		entityTransaction.commit();
-
-		/* Fecha o entityManager */
-		entityManager.close();
 		
 		return retorno;
 	}
@@ -132,8 +114,6 @@ public class DaoGeneric<E> {
 	//Consultar o objeto pessoa para que possa ser executado o download do arquivo imagem.
 	public E consultar(Class<E> entidade, String primaryKey) {
 		
-		EntityManager entityManager = JPAUtil.getEntityManager();
-
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 
 		entityTransaction.begin();
