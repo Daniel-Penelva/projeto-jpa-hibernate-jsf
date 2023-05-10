@@ -72,7 +72,7 @@ public class DaoGeneric<E> implements Serializable {
 	}
 
 	public void deletarPorId(E entidade) {
-
+		
 		/* Abrir uma transação com o BD */
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 
@@ -92,9 +92,6 @@ public class DaoGeneric<E> implements Serializable {
 
 		/* Vai fazer um commit da transação */
 		entityTransaction.commit();
-
-		/* Fecha o entityManager */
-		entityManager.close();
 	}
 
 	@SuppressWarnings("unchecked")

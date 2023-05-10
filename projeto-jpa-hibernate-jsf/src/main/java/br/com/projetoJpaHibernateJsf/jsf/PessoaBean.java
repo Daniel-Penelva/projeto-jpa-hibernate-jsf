@@ -48,91 +48,109 @@ public class PessoaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Pessoa pessoa = new Pessoa();
-	
+
 	@Inject
 	private DaoGeneric<Pessoa> daoGeneric;
 
 	@Inject
 	private IDaoPessoa iDaoPessoa;
-	
-    private List<Pessoa> pessoas = new ArrayList<Pessoa>();
-    
+
+	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
+
 	private List<SelectItem> estados;
-	
+
 	private List<SelectItem> cidades;
-	
-	/* Criar um objeto para trazer esse arquivo de upload.
-	 * Como funciona:  Essa classe pega o arquivo selecionado e cria temporariamente ao lado do servidor para obter 
-	 * no nosso sistema.*/
+
+	/*
+	 * Criar um objeto para trazer esse arquivo de upload. Como funciona: Essa
+	 * classe pega o arquivo selecionado e cria temporariamente ao lado do servidor
+	 * para obter no nosso sistema.
+	 */
 	private Part arquivoFoto;
-	
+
 	@Inject
 	private JPAUtil jpaUtil;
 
 	/* Chamando o método merge do DaoGeneric */
 	public String salvar() throws IOException {
-		
-		//System.out.println("chamando método salvar");
 
-		/* Processar imagem */
-		byte[] imagemByte = getByte(arquivoFoto.getInputStream());
-		
-		/* atribui na pessoa o valor da imagemByte, salvando a imagem original */
-		pessoa.setFotoIconBase64Original(imagemByte);
-		
-		/* Criando uma miniatura dessa imagem */
-		/* Transformar em bufferImage */
-		BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
-		
-		/* Captura o tipo da imagem */
-		int type = bufferedImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
-		
-		/* Definindo o tamanho da imagem */
-		int largura = 200;
-		int altura = 200;
-		
-		/* Criar a miniatura */
-		BufferedImage resizedImage = new BufferedImage(largura, altura, type);
-		Graphics2D g = resizedImage.createGraphics();
-		g.drawImage(bufferedImage, 0, 0, largura, altura, null);
-		g.dispose();
-		
-		/* Escrever novamente a imagem em tamanho menor */
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		
-		/* Precisa saber a extensão da imagem - ela retorna assim: imagem/png */
-		String extensao = arquivoFoto.getContentType().split("\\/")[1];
-		
-		/* Escreve em forma de bytes para o destino onde vai enviar.*/
-		ImageIO.write(resizedImage, extensao, baos);
-		
-		/* Obter a miniatura - recebe como padrão esse formato: "data:image/png;base64," 
-		 * Isso 'DatatypeConverter.printBase64Binary(baos.toByteArray()' coverte a miniatura em base64 */
-		String miniaturaImage = "data:" + arquivoFoto.getContentType() + ";base64," + 
-		 DatatypeConverter.printBase64Binary(baos.toByteArray());
-		
-		/* Com a imagem processada vai ter como setar a base64 e extensão da imagem */
-		pessoa.setFotoIconBase64(miniaturaImage);
-		pessoa.setExtensao(extensao);
-		
-		pessoa = daoGeneric.merge(pessoa);
-		carregarPessoas();
+		try {
 
-		mostrarMsg("Cadastrado com Sucesso!");
+			/* Processar imagem */
+			byte[] imagemByte = null;
+
+			if (arquivoFoto != null) {
+				imagemByte = getByte(arquivoFoto.getInputStream());
+			}
+			if (imagemByte != null && imagemByte.length > 0) {
+				/* atribui na pessoa o valor da imagemByte, salvando a imagem original */
+				pessoa.setFotoIconBase64Original(imagemByte);
+
+				/* Criando uma miniatura dessa imagem */
+				/* Transformar em bufferImage */
+				BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
+
+				/* Descobrir o tipo da imagem */
+				int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
+
+				/* Definindo o tamanho da imagem */
+				int largura = 200;
+				int altura = 200;
+
+				/* Criar a miniatura */
+				BufferedImage resizedImage = new BufferedImage(largura, altura, type);
+				Graphics2D g = resizedImage.createGraphics();
+				g.drawImage(bufferedImage, 0, 0, largura, altura, null);
+				g.dispose();
+
+				/* Escrever novamente a imagem em tamanho menor */
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+				/* Precisa saber a extensão da imagem - ela retorna assim: imagem/png */
+				String extensao = arquivoFoto.getContentType().split("\\/")[1];
+
+				/* Escreve em forma de bytes para o destino onde vai enviar. */
+				ImageIO.write(resizedImage, extensao, baos);
+
+				/*
+				 * Obter a miniatura - recebe como padrão esse formato: "data:image/png;base64,"
+				 * Isso 'DatatypeConverter.printBase64Binary(baos.toByteArray()' coverte a
+				 * miniatura em base64
+				 */
+				String miniaturaImage = "data:" + arquivoFoto.getContentType() + ";base64,"
+						+ DatatypeConverter.printBase64Binary(baos.toByteArray());
+
+				/* Com a imagem processada vai ter como setar a base64 e extensão da imagem */
+				pessoa.setFotoIconBase64(miniaturaImage);
+				pessoa.setExtensao(extensao);
+			}
+
+			pessoa = daoGeneric.merge(pessoa);
+
+			if (pessoa != null) {
+				carregarPessoas();
+				mostrarMsg("Cadastrado com Sucesso!");
+			} else {
+				mostrarMsg("Não foi possível incluir o registro!");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 		/* Vai retornar o valor na mesma página, no caso, primeirapagina.xhtml */
 		return "";
+
 	}
-	
+
 	public void registraLog() {
 		System.out.println("Método registra Log");
 	}
-	
+
 	public void mudancaDeValorNome(ValueChangeEvent evento) {
 		System.out.println("Valor antigo :" + evento.getOldValue());
 		System.out.println("Valor novo :" + evento.getNewValue());
 	}
-	
+
 	public void mudancaDeValorSobrenome(ValueChangeEvent evento) {
 		System.out.println("Valor antigo :" + evento.getOldValue());
 		System.out.println("Valor novo :" + evento.getNewValue());
@@ -303,67 +321,73 @@ public class PessoaBean implements Serializable {
 		}
 	}
 
-	/* Chamando a lista de Estados da interface IDaoPessoa. Esse método vai ser chamado no selectItems
-	 * do arquivo primeirapagina.xhtml */
+	/*
+	 * Chamando a lista de Estados da interface IDaoPessoa. Esse método vai ser
+	 * chamado no selectItems do arquivo primeirapagina.xhtml
+	 */
 	public List<SelectItem> getEstados() {
 		estados = iDaoPessoa.listaEstados();
 		return estados;
 	}
-	
+
 	/* Método que vai ser carregado na primeirapágina.xhtml */
 	@SuppressWarnings("unchecked")
 	public void carregaCidades(AjaxBehaviorEvent event) {
-		
-		/* Tem que chamar um evento do jsf com o casting HtlmSelectOneMenu para capturar o objeto 
-		 * inteiro que foi selecionado no combo Estados. A função do getSource é para converte para o 
-		 * elemento HtmlSelectOneMenu */
-		Estados estado = (Estados) ((HtmlSelectOneMenu)event.getSource()).getValue();
-		
-			/* Vai ser atribuido o valor no setEstados */
-			if(estado != null) {
-				pessoa.setEstados(estado);
-				
-				/*Lista de cidades */
-				List<Cidades> cidades = jpaUtil.getEntityManager().createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
-				
-				List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
-				
-				/* Converter para uma lista de selectItems com o objeto inteiro  */
-				for (Cidades cidade : cidades) {
-					selectItemsCidades.add(new SelectItem(cidade, cidade.getNome()));
-				}
-				
-				setCidades(selectItemsCidades);
-			}
-		
-	}
-	
-	/* Método editar Estado e Cidade */
-	@SuppressWarnings("unchecked")
-	public String editar() {
-		if(pessoa.getCidades() != null) {
-			Estados estado = pessoa.getCidades().getEstados();
+
+		/*
+		 * Tem que chamar um evento do jsf com o casting HtlmSelectOneMenu para capturar
+		 * o objeto inteiro que foi selecionado no combo Estados. A função do getSource
+		 * é para converte para o elemento HtmlSelectOneMenu
+		 */
+		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
+
+		/* Vai ser atribuido o valor no setEstados */
+		if (estado != null) {
 			pessoa.setEstados(estado);
-			
-			/*Lista de cidades */
-			List<Cidades> cidades = jpaUtil.getEntityManager().createQuery("from Cidades where estados.id = "+ estado.getId()).getResultList();
-			
+
+			/* Lista de cidades */
+			List<Cidades> cidades = jpaUtil.getEntityManager()
+					.createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
+
 			List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
-			
-			/* Converter para uma lista de selectItems com o objeto inteiro  */
+
+			/* Converter para uma lista de selectItems com o objeto inteiro */
 			for (Cidades cidade : cidades) {
 				selectItemsCidades.add(new SelectItem(cidade, cidade.getNome()));
 			}
-			
+
+			setCidades(selectItemsCidades);
+		}
+
+	}
+
+	/* Método editar Estado e Cidade */
+	@SuppressWarnings("unchecked")
+	public String editar() {
+		if (pessoa.getCidades() != null) {
+			Estados estado = pessoa.getCidades().getEstados();
+			pessoa.setEstados(estado);
+
+			/* Lista de cidades */
+			List<Cidades> cidades = jpaUtil.getEntityManager()
+					.createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
+
+			List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
+
+			/* Converter para uma lista de selectItems com o objeto inteiro */
+			for (Cidades cidade : cidades) {
+				selectItemsCidades.add(new SelectItem(cidade, cidade.getNome()));
+			}
+
 			setCidades(selectItemsCidades);
 		}
 		return "";
 	}
-	
+
 	public List<SelectItem> getCidades() {
 		return cidades;
 	}
-	
+
 	public void setCidades(List<SelectItem> cidades) {
 		this.cidades = cidades;
 	}
@@ -399,72 +423,80 @@ public class PessoaBean implements Serializable {
 	public void setArquivoFoto(Part arquivoFoto) {
 		this.arquivoFoto = arquivoFoto;
 	}
-	
+
 	/* Método que converter InputStream para array de bytes */
-	private byte[] getByte(InputStream is) throws IOException{
-		
-		int len;          //tamanho do arquivo
-		int size = 1024;  // tamanho do arquivo padrão
+	private byte[] getByte(InputStream is) throws IOException {
+
+		int len; // tamanho do arquivo
+		int size = 1024; // tamanho do arquivo padrão
 		byte[] buf = null; // memória buffer (array do tipo byte)
-		
-		if(is instanceof ByteArrayInputStream) {
+
+		if (is instanceof ByteArrayInputStream) {
 			size = is.available();
 			buf = new byte[size];
 			len = is.read(buf, 0, size);
-			
-		}else {
+
+		} else {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			buf = new byte[size];
-			
-			
-			/*O método read() do InputStream retorna um valor inteiro que contém obyte correspondente que foi lido. 
-			 * Enquanto este valor lido for diferente de -1 significa que a leitura do Stream ainda não terminou. 
-			 * Então nós lemos repetidas vezes que o valor -1 seja atingido assim saberemos que a leitura terminou.
-			 * */
-			while((len = is.read(buf, 0, size)) != -1) {
+
+			/*
+			 * O método read() do InputStream retorna um valor inteiro que contém obyte
+			 * correspondente que foi lido. Enquanto este valor lido for diferente de -1
+			 * significa que a leitura do Stream ainda não terminou. Então nós lemos
+			 * repetidas vezes que o valor -1 seja atingido assim saberemos que a leitura
+			 * terminou.
+			 */
+			while ((len = is.read(buf, 0, size)) != -1) {
 				bos.write(buf, 0, len);
-				
-				/* write(), tem a função de escrever em forma de bytes para o destino onde vai enviar.*/
+
+				/*
+				 * write(), tem a função de escrever em forma de bytes para o destino onde vai
+				 * enviar.
+				 */
 			}
-			
-			buf = bos.toByteArray();  // vai ficar na memória do buffer
+
+			buf = bos.toByteArray(); // vai ficar na memória do buffer
 		}
-		
+
 		return buf;
 	}
-	
+
 	public void download() throws IOException {
-		
+
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String fileDownloadId = params.get("fileDownloadId");
-		//System.out.println(fileDownloadId);
-		
+		// System.out.println(fileDownloadId);
+
 		Pessoa pessoa = daoGeneric.consultar(Pessoa.class, fileDownloadId);
-		//System.out.println(pessoa);
-		
+		// System.out.println(pessoa);
+
 		/* Parte de codificação para fazer o download da imagem */
-		//Resposta para o nosso navegador
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		
-		// Seta o cabeçalho, o tipo e tamanho dos dados. Dentro do parametro e sempre esse valor 'Content-Disposition'
-		// e como é um arquivo o segundo parametro vai ser sempre "attachment; filename=download." e a extensão do arquivo.
+		// Resposta para o nosso navegador
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+				.getResponse();
+
+		// Seta o cabeçalho, o tipo e tamanho dos dados. Dentro do parametro e sempre
+		// esse valor 'Content-Disposition'
+		// e como é um arquivo o segundo parametro vai ser sempre "attachment;
+		// filename=download." e a extensão do arquivo.
 		response.addHeader("Content-Disposition", "attachment; filename=download." + pessoa.getExtensao());
-		
-		//Define o formato da mídia, por exemplo, imagem,video,etc...
+
+		// Define o formato da mídia, por exemplo, imagem,video,etc...
 		response.setContentType("application/octet-stream");
-		
+
 		// Tamanho do arquivo que vai ser retornado
 		response.setContentLength(pessoa.getFotoIconBase64Original().length);
-		
+
 		// Define o fluxo de saída da resposta
 		response.getOutputStream().write(pessoa.getFotoIconBase64Original());
-		
+
 		// Confirmar essa resposta de fluxo de dados, ou seja, escreve essa resposta
 		response.getOutputStream().flush();
-		
+
 		// Fala para o JSF que a resposta está completa
 		FacesContext.getCurrentInstance().responseComplete();
-		
+
 	}
-	
+
 }
