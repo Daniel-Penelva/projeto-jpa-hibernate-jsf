@@ -27,39 +27,39 @@
 			</f:facet>
 
 			<h:outputLabel value="Id:" />
-			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
+			<b:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 			
 			<h:outputLabel value="Foto:" />
-			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}"></h:inputFile>
+			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}"/>
 
 			<h:outputLabel value="Nome:" />
-			<h:inputText value="#{pessoaBean.pessoa.nome}" valueChangeListener="#{pessoaBean.mudancaDeValorNome}" required="true"
+			<b:inputText value="#{pessoaBean.pessoa.nome}" valueChangeListener="#{pessoaBean.mudancaDeValorNome}" required="true"
 				requiredMessage="Informe o nome do usuário"
 				validatorMessage="Entre com um nome válido" pt:placeholder="Informe nome">
 				<f:validateLength minimum="2" maximum="50" />
-			</h:inputText>
+			</b:inputText>
 
 			<h:outputLabel value="Sobrenome:" />
-			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" valueChangeListener="#{pessoaBean.mudancaDeValorSobrenome}" pt:placeholder="Informe sobrenome"/>
+			<b:inputText value="#{pessoaBean.pessoa.sobrenome}" valueChangeListener="#{pessoaBean.mudancaDeValorSobrenome}" pt:placeholder="Informe sobrenome"/>
 
 			<h:outputLabel value="Idade:" />
-			<h:inputText value="#{pessoaBean.pessoa.idade}" pt:placeholder="Informe idade"/>
+			<b:inputText value="#{pessoaBean.pessoa.idade}" pt:placeholder="Informe idade"/>
 
 			<h:outputLabel value="Sexo:" />
-			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
+			<b:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
 				required="false">
 				<f:selectItem itemValue="NAO" itemLabel="Selecione"
 					noSelectionOption="true" />
 				<f:selectItem itemValue="MASCULINO" itemLabel="Masculino" />
 				<f:selectItem itemValue="FEMININO" itemLabel="Feminino" />
-			</h:selectOneMenu>
+			</b:selectOneMenu>
 
 			<h:outputLabel value="Data Nascimento:" />
-			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}"
+			<b:inputText value="#{pessoaBean.pessoa.dataNascimento}"
 				converterMessage="Data de Nascimento Errada!">
 				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
 					timeZone="GMT-03:00" />
-			</h:inputText>
+			</b:inputText>
 
 			<h:outputLabel value="Framewoks:" />
 			<h:selectManyMenu id="campoFrameworks"
@@ -72,68 +72,68 @@
 			</h:selectManyMenu>
 			
 			<h:outputLabel value="CEP:" />
-			<h:inputText value="#{pessoaBean.pessoa.cep}" pt:placeholder="Informe CEP">
+			<b:inputText value="#{pessoaBean.pessoa.cep}" pt:placeholder="Informe CEP">
 				<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}" render="logradouro complemento bairro localidade uf unidade ibge gia"/>
-			</h:inputText>
+			</b:inputText>
 			
 			<h:outputLabel value="Logradouro:" />
-			<h:inputText value="#{pessoaBean.pessoa.logradouro}" id="logradouro"/>
+			<b:inputText value="#{pessoaBean.pessoa.logradouro}" id="logradouro"/>
 			
 			<h:outputLabel value="Complemento:" />
-			<h:inputText value="#{pessoaBean.pessoa.complemento}" id="complemento"/>
+			<b:inputText value="#{pessoaBean.pessoa.complemento}" id="complemento"/>
 			
 			<h:outputLabel value="Bairro:" />
-			<h:inputText value="#{pessoaBean.pessoa.bairro}" id="bairro"/>
+			<b:inputText value="#{pessoaBean.pessoa.bairro}" id="bairro"/>
 			
 			<h:outputLabel value="Localidade:" />
-			<h:inputText value="#{pessoaBean.pessoa.localidade}" id="localidade"/>
+			<b:inputText value="#{pessoaBean.pessoa.localidade}" id="localidade"/>
 			
 			<h:outputLabel value="UF:" />
-			<h:inputText value="#{pessoaBean.pessoa.uf}" id="uf"/>
+			<b:inputText value="#{pessoaBean.pessoa.uf}" id="uf"/>
 			
 			<h:outputLabel value="Unidade:" />
-			<h:inputText value="#{pessoaBean.pessoa.unidade}" id="unidade"/>
+			<b:inputText value="#{pessoaBean.pessoa.unidade}" id="unidade"/>
 			
 			<h:outputLabel value="IBGE:" />
-			<h:inputText value="#{pessoaBean.pessoa.ibge}" id="ibge"/>
+			<b:inputText value="#{pessoaBean.pessoa.ibge}" id="ibge"/>
 			
 			<h:outputLabel value="GIA:" />
-			<h:inputText value="#{pessoaBean.pessoa.gia}" id="gia"/>
+			<b:inputText value="#{pessoaBean.pessoa.gia}" id="gia"/>
 
 			<h:outputLabel value="Ativo:" />
-			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
+			<b:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
 
 			<h:outputLabel value="Login:" />
-			<h:inputText value="#{pessoaBean.pessoa.login}" pt:placeholder="Informe login"/>
+			<b:inputText value="#{pessoaBean.pessoa.login}" pt:placeholder="Informe login"/>
 
 			<h:outputLabel value="Senha:" />
-			<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
+			<b:inputSecret value="#{pessoaBean.pessoa.senha}" />
 
 
 			<h:outputLabel value="Perfil:" />
-			<h:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUser}"
+			<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUser}"
 				required="false">
 				<f:selectItem itemValue="NAO" itemLabel="Selecione"
 					noSelectionOption="true" />
 				<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador" />
 				<f:selectItem itemValue="PROGRAMADOR" itemLabel="Programador" />
 				<f:selectItem itemValue="ANALISTA" itemLabel="Analista de Sistema" />
-			</h:selectOneMenu>
+			</b:selectOneMenu>
 
 			<h:outputLabel value="Lingua:" />
-			<h:selectOneRadio value="#{pessoaBean.pessoa.lingua}">
+			<b:selectOneMenu value="#{pessoaBean.pessoa.lingua}">
 				<f:selectItem itemValue="INGLES" itemLabel="Inglês" />
 				<f:selectItem itemValue="ESPANHOL" itemLabel="Espanhol" />
-			</h:selectOneRadio>
+			</b:selectOneMenu>
 
 			<h:outputLabel value="Nível Programador:" />
-			<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}"
+			<b:selectOneMenu value="#{pessoaBean.pessoa.nivelProgramador}"
 				layout="pageDirection">
 				<f:selectItem itemValue="JUNIOR" itemLabel="Junior" />
 				<f:selectItem itemValue="PLENO" itemLabel="Pleno" />
 				<f:selectItem itemValue="SENIOR" itemLabel="Sênior" />
 				<f:selectItem itemValue="ESPECIALISTA" itemLabel="Especialista" />
-			</h:selectOneRadio>
+			</b:selectOneMenu>
 
 			<h:outputLabel value="Linguagens de Programação:" />
 			<h:selectManyCheckbox
@@ -174,7 +174,7 @@
 	</h:form>
 
 	<h:form id="formTabel">
-		<h:dataTable var="p" value="#{pessoaBean.pessoas}" border="2"
+		<b:dataTable var="p" value="#{pessoaBean.pessoas}" border="2"
 			cellpadding="4" rendered="true">
 
 			<f:facet name="header">
@@ -226,7 +226,7 @@
 					<h:graphicImage value="/resources/img/remover.png" />
 				</h:commandLink>
 			</h:column>
-		</h:dataTable>
+		</b:dataTable>
 	</h:form>
 
 </h:body>
