@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
@@ -60,7 +61,6 @@
 					timeZone="GMT-03:00" />
 			</h:inputText>
 
-
 			<h:outputLabel value="Framewoks:" />
 			<h:selectManyMenu id="campoFrameworks"
 				value="#{pessoaBean.pessoa.frameworks}" style="height:120px">
@@ -99,7 +99,6 @@
 			
 			<h:outputLabel value="GIA:" />
 			<h:inputText value="#{pessoaBean.pessoa.gia}" id="gia"/>
-
 
 			<h:outputLabel value="Ativo:" />
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />

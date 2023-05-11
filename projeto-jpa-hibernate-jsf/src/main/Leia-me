@@ -524,3 +524,9 @@ código, melhora a distribuição de responsabilidades entre as classes e facili
 
 OBS. Para o CDI funcionar sem esses erros faltou você implementar a interface Serializable nas classes que utilizam a anotação @Named.
  
+-------------------------------------------------------------
+
+Vamos trabalhar com o BootFaces
+Site: https://www.bootsfaces.net/
+
+Quick Start: https://www.bootsfaces.net/quick-start.jsf;jsessionid=74phRQggjinU34qPICgtHHpnBiFwUcbgshF5v3e5.bffront03
