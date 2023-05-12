@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 
 import br.com.projetoJpaHibernateJsf.entidade.Estados;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
@@ -32,8 +33,13 @@ public class IDaoPessoaImpl implements IDaoPessoa, Serializable{
 		/* iniciar a Transação */
 		entityTransaction.begin();
 
-		pessoa = (Pessoa) entityManager.createQuery("SELECT p FROM Pessoa p WHERE p.login = '"+login+"' and p.senha = '"+senha+"'").getSingleResult();
+		try {
+			pessoa = (Pessoa) entityManager.createQuery("SELECT p FROM Pessoa p WHERE p.login = '"+login+"' and p.senha = '"+senha+"'").getSingleResult();
 
+		} catch (javax.persistence.NoResultException e) { // Tratamento se não encontrar o usuário com login e senha
+			e.printStackTrace();
+		}
+		
 		/* Vai fazer um commit da transação */
 		entityTransaction.commit();
 
