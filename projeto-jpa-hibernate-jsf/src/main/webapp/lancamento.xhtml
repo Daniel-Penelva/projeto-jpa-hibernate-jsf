@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui = "http://java.sun.com/jsf/facelets">
 
@@ -11,41 +12,54 @@
 <h:body>
 
 	<ui:include src="/menu.xhtml"/>
+	
+	<b:messages id="msg"/>
 
-	<h:form id="formLancamento">
+	<b:form id="formLancamento">
 
-			<h:panelGrid columns="2">
+			<b:panelGrid columns="2">
 				<f:facet name="header">
 					<h:outputText value="Lançamentos" />
 				</f:facet>
-
-				<h:outputLabel value="ID:" />
-				<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
-
-				<h:outputLabel value="Nota Fiscal:" />
-				<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" />
-
-				<h:outputLabel value="Empresa Origem:" />
-				<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" />
-
-				<h:outputLabel value="Empresa Destino:" />
-				<h:inputText value="#{lancamentoBean.lancamento.empresaDestino}" />
-
-				<h:outputLabel />
-
+				
+				<b:column>
+					<h:outputLabel value="ID:" />
+					<b:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
+				</b:column>
+				
+				<b:column>
+					<h:outputLabel value="Nota Fiscal:" />
+					<b:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" required="true" required-message="Informe a nota oficial"/>
+				</b:column>
+				
+				<b:column>
+					<h:outputLabel value="Empresa Origem:" />
+					<b:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" required="true" required-message="Informe a origem da empresa"/>
+				</b:column>
+				
+				<b:column>
+					<h:outputLabel value="Empresa Destino:" />
+					<b:inputText value="#{lancamentoBean.lancamento.empresaDestino}" required="true" required-message="Informe o destino da empresa"/>
+				</b:column>
+				
 				<h:panelGroup>
-					<h:commandButton value="Novo" action="#{lancamentoBean.novo}"
-						image="/resources/img/novo.png" title="Novo" />
-					<h:commandButton value="Salvar" action="#{lancamentoBean.salvar}"
-						image="/resources/img/salvar.png" title="Salvar" />
-					<h:commandButton value="Remover" action="#{lancamentoBean.remove}"
-						image="/resources/img/remover.png" title="Remover" />
-					<h:commandButton value="Limpar" type="reset"
-						image="/resources/img/limpar.png" title="Limpar" />
+					<h:commandButton value="Novo" action="#{lancamentoBean.novo}" id="botaoNovo" image="/resources/img/novo.png" title="Novo"  >
+						<f:ajax execute="botaoNovo" render="@form"/>
+					</h:commandButton>
+					
+					<h:commandButton value="Salvar" action="#{lancamentoBean.salvar}" image="/resources/img/salvar.png" title="Salvar" />
+					
+					<h:commandButton value="Remover" action="#{lancamentoBean.remove}" image="/resources/img/remover.png" title="Remover" />
+					
+					<h:commandButton value="Limpar" id="botaoLimpar" action="#{lancamentoBean.novo}" image="/resources/img/limpar.png" title="Limpar" >
+						<f:ajax execute="botaoLimpar" render="@form"/>
+					</h:commandButton>
 				</h:panelGroup>
-			</h:panelGrid>
-
-			<h:dataTable value="#{lancamentoBean.lancamentos}" var="lanc"
+			</b:panelGrid>	
+		</b:form>
+			
+		<b:form>
+			<b:dataTable value="#{lancamentoBean.lancamentos}" var="lanc"
 				border="3">
 				<f:facet name="header">Lista de lançamentos</f:facet>
 
@@ -56,7 +70,7 @@
 
 				<h:column>
 					<f:facet name="header">Nota Fiscal:</f:facet>
-					<h:outputLabel value="#{lanc.numeroNotaFiscal}" />
+					<h:outputLabel value="#{lanc.numeroNotaFiscal}"/>
 				</h:column>
 
 				<h:column>
@@ -76,7 +90,7 @@
 
 				<h:column>
 					<f:facet name="header">Editar:</f:facet>
-					<h:commandLink title="Editar">
+					<h:commandLink title="Editar" immediate="true">
 						<h:graphicImage value="/resources/img/editar.png" />
 						<f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}"/>
 					</h:commandLink>
@@ -84,13 +98,13 @@
 				
 				<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
 					<f:facet name="header">Remover:</f:facet>
-					<h:commandLink action="#{lancamentoBean.remove}" title="Remover">
+					<h:commandLink action="#{lancamentoBean.remove}" title="Remover" immediate="true">
 						<h:graphicImage value="/resources/img/remover.png" />
 						<f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}"/>
 					</h:commandLink>
 				</h:column>
-			</h:dataTable>
-	</h:form>
+			</b:dataTable>
+	</b:form>
 </h:body>
 
 </html>

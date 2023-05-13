@@ -40,6 +40,7 @@ import br.com.projetoJpaHibernateJsf.entidade.Estados;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
 import br.com.projetoJpaHibernateJsf.jpaUtil.JPAUtil;
 import br.com.projetoJpaHibernateJsf.repository.IDaoPessoa;
+import net.bootsfaces.component.selectOneMenu.SelectOneMenu;
 
 @javax.faces.view.ViewScoped
 @Named(value = "pessoaBean")
@@ -73,7 +74,7 @@ public class PessoaBean implements Serializable {
 
 	/* Chamando o método merge do DaoGeneric */
 	public String salvar() throws IOException {
-
+		
 		try {
 
 			/* Processar imagem */
@@ -139,7 +140,6 @@ public class PessoaBean implements Serializable {
 
 		/* Vai retornar o valor na mesma página, no caso, primeirapagina.xhtml */
 		return "";
-
 	}
 
 	public void registraLog() {
@@ -339,7 +339,7 @@ public class PessoaBean implements Serializable {
 		 * o objeto inteiro que foi selecionado no combo Estados. A função do getSource
 		 * é para converte para o elemento HtmlSelectOneMenu
 		 */
-		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
+		Estados estado = (Estados) ((SelectOneMenu) event.getSource()).getValue();
 
 		/* Vai ser atribuido o valor no setEstados */
 		if (estado != null) {
