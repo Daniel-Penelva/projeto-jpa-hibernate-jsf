@@ -38,8 +38,18 @@
 				</b:column>
 				
 				<b:column>
+					<h:outputLabel value="Data Inicial:" />
+					<b:datepicker locale="en" value="#{lancamentoBean.lancamento.dataInicial}" required="true" required-message="Informe a data inicial"/>
+				</b:column>
+				
+				<b:column>
 					<h:outputLabel value="Empresa Destino:" />
 					<b:inputText value="#{lancamentoBean.lancamento.empresaDestino}" required="true" required-message="Informe o destino da empresa"/>
+				</b:column>
+				
+				<b:column>
+					<h:outputLabel value="Data Final:" />
+					<b:datepicker locale="en" value="#{lancamentoBean.lancamento.dataFinal}" required="true" required-message="informe a data final"/>
 				</b:column>
 				
 				<h:panelGroup>
