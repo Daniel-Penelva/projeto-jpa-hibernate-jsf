@@ -111,6 +111,24 @@ public class DaoGeneric<E> implements Serializable {
 		return retorno;
 	}
 	
+	// Limitar carregamento na tela
+	@SuppressWarnings("unchecked")
+	public List<E> getListEntityLimit10(Class<E> entidade) {
+
+		/* Abrir uma transação com o BD */
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+
+		/* iniciar a Transação */
+		entityTransaction.begin();
+		
+		List<E> retorno = entityManager.createQuery("from " + entidade.getName() + " ORDER BY id DESC").setMaxResults(10).getResultList();
+		
+		/* Vai fazer um commit da transação */
+		entityTransaction.commit();
+		
+		return retorno;
+	}
+	
 	//Consultar o objeto pessoa para que possa ser executado o download do arquivo imagem.
 	public E consultar(Class<E> entidade, String primaryKey) {
 		

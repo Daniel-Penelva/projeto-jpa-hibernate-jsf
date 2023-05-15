@@ -193,10 +193,10 @@ public class PessoaBean implements Serializable {
 		return "";
 	}
 
-	/* Método para carregar uma lista de Pessoas */
+	/* Método para carregar uma lista de Pessoas com limite de 10 */
 	@PostConstruct
 	public void carregarPessoas() {
-		pessoas = daoGeneric.getListEntity(Pessoa.class);
+		pessoas = daoGeneric.getListEntityLimit10(Pessoa.class);
 	}
 
 	/* Método para logar o usuário */

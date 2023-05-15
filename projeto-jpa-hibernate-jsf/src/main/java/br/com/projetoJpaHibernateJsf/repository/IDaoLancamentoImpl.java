@@ -33,6 +33,7 @@ public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 		return lista;
 	}
 	
+	// Limitando carregamento na tela 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lancamento> consultarLimit10(Long codUser) {
