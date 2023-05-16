@@ -532,3 +532,8 @@ Site: https://www.bootsfaces.net/
 Quick Start: https://www.bootsfaces.net/quick-start.jsf;jsessionid=74phRQggjinU34qPICgtHHpnBiFwUcbgshF5v3e5.bffront03
 
 Componentes: https://showcase.bootsfaces.net/
+
+Milagre do Bootsfaces, vamos colocar a funcionalidade do pdf para baixar a lista de lancamento, para isso, 
+basta adicionar o atributo 'pdf' e o valor como 'true' que automaticamente o bootsfaces irá fazer toda essa 
+funcionalidade. O mesmo para excel, basta adicionar o atributo 'excel' e o valor 'true'.
+Site: https://showcase.bootsfaces.net/forms/DataTable.jsf
