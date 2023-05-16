@@ -11,27 +11,32 @@
 <h:body>
 
     <b:messages autoUpdate="true" id="msg"/>
-	<b:form id="formLogin" style="margin-top:22%; margin-left:40%;">
+	<b:form id="formLogin" style="margin-top:10%; margin-left:40%;">
 
 		<h1>Realize o Login</h1>
 
 		<b:panelGrid columns="3">
-			<b:column>
-				<h:outputLabel value="Login" />
-				<b:inputText id="msgLogin" value="#{pessoaBean.pessoa.login}" pt:placeholder="Entre com o login" required="true" requiredMessage="Informe o Login"/>
-				<b:message for="msgLogin" auto-update="true"/>
-			</b:column>
-			
-			<b:column>
-				<h:outputLabel value="Senha" />
-				<b:inputSecret id="msgSenha" value="#{pessoaBean.pessoa.senha}" pt:placeholder="Entre com a senha" required="true" requiredMessage="Informe a senha"/>
-				<b:message for="msgSenha" auto-update="true"/>
-			</b:column>
-			
+		
+			<b:panel>
+				<b:column>
+					<h:outputLabel value="Login" />
+					<b:inputText id="msgLogin" value="#{pessoaBean.pessoa.login}" pt:placeholder="Entre com o login" required="true" requiredMessage="Informe o Login"/>
+					<b:message for="msgLogin" auto-update="true"/>
+				</b:column>
+				
+				<b:column>
+					<h:outputLabel value="Senha" />
+					<b:inputSecret id="msgSenha" value="#{pessoaBean.pessoa.senha}" pt:placeholder="Entre com a senha" required="true" requiredMessage="Informe a senha"/>
+					<b:message for="msgSenha" auto-update="true"/>
+				</b:column>
+				
+				<b:column>
+					<b:commandButton value="Acessar" action="#{pessoaBean.logar}"/>
+				</b:column>
+				
+			</b:panel>
 		</b:panelGrid>
-		
-		<b:commandButton value="Acessar" action="#{pessoaBean.logar}"/>
-		
+	
 	</b:form>
 </h:body>
 

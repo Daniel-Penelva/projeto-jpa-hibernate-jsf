@@ -22,10 +22,12 @@
 		<h:graphicImage height="150" width="150" library="img" name="jsf.png" />
 
 		<h:panelGrid columns="1" rendered="true">
+		
 			<f:facet name="header">
-				<h:outputText value="Cadastro de Usuário" />
+				<h:outputText value="Cadastro de Usuário" style="margin-left:35%;"/>
 			</f:facet>
 			
+			<b:panel style="width:60%; margin-left:10%;" >
 			<b:column>
 				<h:outputLabel value="Id:" />
 				<b:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
@@ -118,6 +120,10 @@
 				<b:inputText value="#{pessoaBean.pessoa.gia}" id="gia"/>
 			</b:column>
 			
+			</b:panel>
+			
+			<b:panel style="width:60%; margin-left:10%;">
+			
 			<b:column>
 				<h:outputLabel value="Ativo:" />
 				<b:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
@@ -193,6 +199,9 @@
 				</b:selectOneMenu>
 			</b:column>
 			
+			</b:panel>
+			
+			<b:panel style="width:60%; margin-left:10%;">
 			<b:column>
 				<h:panelGroup>
 				
@@ -206,12 +215,14 @@
 					</h:commandButton>
 				</h:panelGroup>
 			</b:column>
-
+			</b:panel>
 		</h:panelGrid>
 
 	</h:form>
 
 	<h:form id="formTabel">
+		<b:panel style="width:60%; margin-left:10%;">
+		
 		<b:dataTable var="p" value="#{pessoaBean.pessoas}" border="2"
 			cellpadding="4" rendered="true">
 
@@ -265,6 +276,7 @@
 				</h:commandLink>
 			</h:column>
 		</b:dataTable>
+	</b:panel>
 	</h:form>
 
 </h:body>
