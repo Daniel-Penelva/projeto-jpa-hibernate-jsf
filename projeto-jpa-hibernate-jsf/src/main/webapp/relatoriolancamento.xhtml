@@ -16,104 +16,24 @@
 	<b:messages id="msg"/>
 
 	<b:form id="formLancamento">
-
-			<b:panelGrid columns="2">
-				<f:facet name="header">
-					<h:outputText value="Lançamentos" />
-				</f:facet>
-				
-				<b:column>
-					<h:outputLabel value="ID:" />
-					<b:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
-				</b:column>
-				
-				<b:column>
-					<h:outputLabel value="Nota Fiscal:" />
-					<b:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" required="true" required-message="Informe a nota oficial"/>
-				</b:column>
-				
-				<b:column>
-					<h:outputLabel value="Empresa Origem:" />
-					<b:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" required="true" required-message="Informe a origem da empresa"/>
-				</b:column>
-				
-				<b:column>
-					<h:outputLabel value="Data Inicial:" />
-					<b:datepicker locale="en" value="#{lancamentoBean.lancamento.dataInicial}" required="true" required-message="Informe a data inicial"/>
-				</b:column>
-				
-				<b:column>
-					<h:outputLabel value="Empresa Destino:" />
-					<b:inputText value="#{lancamentoBean.lancamento.empresaDestino}" required="true" required-message="Informe o destino da empresa"/>
-				</b:column>
-				
-				<b:column>
-					<h:outputLabel value="Data Final:" />
-					<b:datepicker locale="en" value="#{lancamentoBean.lancamento.dataFinal}" required="true" required-message="informe a data final"/>
-				</b:column>
-				
-				<h:panelGroup>
-					<h:commandButton value="Novo" action="#{lancamentoBean.novo}" id="botaoNovo" image="/resources/img/novo.png" title="Novo"  >
-						<f:ajax execute="botaoNovo" render="@form"/>
-					</h:commandButton>
-					
-					<h:commandButton value="Salvar" action="#{lancamentoBean.salvar}" image="/resources/img/salvar.png" title="Salvar" />
-					
-					<h:commandButton value="Remover" action="#{lancamentoBean.remove}" image="/resources/img/remover.png" title="Remover" />
-					
-					<h:commandButton value="Limpar" id="botaoLimpar" action="#{lancamentoBean.novo}" image="/resources/img/limpar.png" title="Limpar" >
-						<f:ajax execute="botaoLimpar" render="@form"/>
-					</h:commandButton>
-				</h:panelGroup>
-			</b:panelGrid>	
-		</b:form>
+		<b:panelGrid columns="2">
 			
-		<b:form>
-			<b:dataTable value="#{lancamentoBean.lancamentos}" var="lanc"
-				border="3">
-				<f:facet name="header">Lista de lançamentos</f:facet>
-
-				<h:column>
-					<f:facet name="header">ID:</f:facet>
-					<h:outputLabel value="#{lanc.id}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Nota Fiscal:</f:facet>
-					<h:outputLabel value="#{lanc.numeroNotaFiscal}"/>
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Empresa Origem:</f:facet>
-					<h:outputLabel value="#{lanc.empresaOrigem}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Empresa Destino:</f:facet>
-					<h:outputLabel value="#{lanc.empresaDestino}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Usuário:</f:facet>
-					<h:outputLabel value="#{lanc.usuario.nome}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Editar:</f:facet>
-					<h:commandLink title="Editar" immediate="true">
-						<h:graphicImage value="/resources/img/editar.png" />
-						<f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}"/>
-					</h:commandLink>
-				</h:column>
-				
-				<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
-					<f:facet name="header">Remover:</f:facet>
-					<h:commandLink action="#{lancamentoBean.remove}" title="Remover" immediate="true">
-						<h:graphicImage value="/resources/img/remover.png" />
-						<f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}"/>
-					</h:commandLink>
-				</h:column>
-			</b:dataTable>
+		</b:panelGrid>
+		<b:commandButton value="Buscar" action="#{relatorioLancamentoBean.buscarlancamento}"/>	
+			
+	</b:form>
+		
+	<!-- OBS. Capturar os atributos da entidade Lancamento  -->	
+	<b:form>
+		<b:dataTable value="#{relatorioLancamentoBean.lancamentos}" var="lanc" border="3">
+			<b:dataTableColumn value="#{lanc.id}" label="ID"/>
+			<b:dataTableColumn value="#{lanc.usuario.nome}" label="Usuário"/>
+			<b:dataTableColumn value="#{lanc.numeroNotaFiscal}" label="Nota Fiscal"/>
+			<b:dataTableColumn value="#{lanc.dataInicial}" label="Data Inicial"/>
+			<b:dataTableColumn value="#{lanc.dataFinal}" label="Data Final"/>
+			<b:dataTableColumn value="#{lanc.empresaOrigem}" label="Empresa Origem"/>
+			<b:dataTableColumn value="#{lanc.empresaDestino}" label="Empresa Destino"/>
+		</b:dataTable>
 	</b:form>
 </h:body>
 

@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.projetoJpaHibernateJsf.dao.DaoGeneric;
 import br.com.projetoJpaHibernateJsf.entidade.Lancamento;
 import br.com.projetoJpaHibernateJsf.repository.IDaoLancamento;
 
@@ -21,6 +22,17 @@ public class RelatorioLancamentoBean implements Serializable{
 	
 	@Inject
 	private IDaoLancamento daoLancamento;
+	
+	@Inject
+	private DaoGeneric<Lancamento> daoGeneric;
+	
+	
+	// Ação do botão 
+	public void buscarlancamento() {
+		//System.out.println("Chamou o botão buscar");
+		
+		lancamentos = daoGeneric.getListEntity(Lancamento.class);
+	}
 	
 	
 	// Métodos setters e getters
