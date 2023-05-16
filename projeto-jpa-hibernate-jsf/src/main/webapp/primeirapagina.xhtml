@@ -69,12 +69,8 @@
 			</b:column>
 			
 			<b:column>
-				<h:outputLabel value="Data Nascimento:" />
-				<b:inputText value="#{pessoaBean.pessoa.dataNascimento}"
-					converterMessage="Data de Nascimento Errada!">
-					<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-						timeZone="GMT-03:00" />
-				</b:inputText>
+				<h:outputLabel value="Data de Nascimento: "/>
+				<b:datepicker locale="en" value="#{pessoaBean.pessoa.dataNascimento}"></b:datepicker>
 			</b:column>
 			
 			<b:column>
