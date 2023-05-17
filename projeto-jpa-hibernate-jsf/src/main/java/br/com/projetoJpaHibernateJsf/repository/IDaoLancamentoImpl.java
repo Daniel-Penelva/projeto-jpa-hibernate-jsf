@@ -1,6 +1,7 @@
 package br.com.projetoJpaHibernateJsf.repository;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -48,6 +49,12 @@ public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 		transaction.commit();
 		
 		return lista;
+	}
+
+	@Override
+	public List<Lancamento> relatorioLancamento(String numeroNota, Date dataInicial, Date dataFinal) {
+		System.out.println(numeroNota + " --- " + dataInicial + " --- " + dataFinal);
+		return null;
 	}
 
 }

@@ -17,11 +17,29 @@
 
 	<b:form id="formLancamento">
 		<b:panelGrid columns="2">
+		
+			<b:column>
+				<h:outputLabel value="Data Inicial"/>
+				<b:datepicker locale="en" value="#{relatorioLancamentoBean.dataInicial}"/>
+			</b:column>
+			
+			<b:column>
+				<h:outputLabel value="Data Final"/>
+				<b:datepicker locale="en" value="#{relatorioLancamentoBean.dataFinal}"/>
+			</b:column>
+			
+			<b:column>
+				<h:outputLabel value="Número Nota"/>
+				<b:inputText value="#{relatorioLancamentoBean.numeroNota}" />
+			</b:column>
 			
 		</b:panelGrid>
-		<b:commandButton value="Buscar" action="#{relatorioLancamentoBean.buscarlancamento}"/>	
+		<b:commandButton value="Buscar" action="#{relatorioLancamentoBean.buscarlancamento}" look="primary" style="margin-left:12px;"/>	
 			
 	</b:form>
+	
+	<br />
+	<br />
 		
 	<!-- OBS. Capturar os atributos da entidade Lancamento  -->	
 	<b:form>

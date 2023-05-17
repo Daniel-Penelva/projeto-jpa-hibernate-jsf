@@ -1,5 +1,6 @@
 package br.com.projetoJpaHibernateJsf.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.projetoJpaHibernateJsf.entidade.Lancamento;
@@ -10,5 +11,7 @@ public interface IDaoLancamento {
 	List<Lancamento> consultar(Long codUser);
 
 	List<Lancamento> consultarLimit10(Long codUser);
+	
+	List<Lancamento> relatorioLancamento(String numeroNota, Date dataInicial, Date dataFinal);
 
 }
