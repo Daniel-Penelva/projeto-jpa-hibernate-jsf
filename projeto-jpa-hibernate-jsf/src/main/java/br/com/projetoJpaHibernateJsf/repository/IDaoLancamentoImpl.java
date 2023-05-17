@@ -1,6 +1,7 @@
 package br.com.projetoJpaHibernateJsf.repository;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,8 +54,31 @@ public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 
 	@Override
 	public List<Lancamento> relatorioLancamento(String numeroNota, Date dataInicial, Date dataFinal) {
-		System.out.println(numeroNota + " --- " + dataInicial + " --- " + dataFinal);
-		return null;
+		//System.out.println(numeroNota + " --- " + dataInicial + " --- " + dataFinal);
+		
+		List<Lancamento> lancamentos = new ArrayList<Lancamento>();
+		
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT l FROM Lancamento l ");
+		
+		//OBS. Tem que montar os sql de acordo com as condições
+		//Criando consulta por número da nota - OBS. !numeroNota.isEmpty() - diferente de vazio
+		if(dataInicial == null && dataFinal == null && numeroNota != null && !numeroNota.isEmpty()) {
+			
+			// numeroNota é uma string, logo tem que usar uma aspa simples
+			//o método trim() é para remover espaço
+			sql.append("WHERE l.numeroNotaFiscal = '").append(numeroNota.trim()).append("'");
+		}
+		
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		
+		lancamentos = entityManager.createQuery(sql.toString()).getResultList();
+		
+		transaction.commit();
+		
+		return lancamentos;
 	}
 
 }
