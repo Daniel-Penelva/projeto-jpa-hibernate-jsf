@@ -55,7 +55,7 @@
 			
 			<b:column>
 				<h:outputLabel value="Idade:" />
-				<b:inputText value="#{pessoaBean.pessoa.idade}" pt:placeholder="Informe idade"/>
+				<b:inputText value="#{pessoaBean.pessoa.idade}" mask="numeric" pt:placeholder="Informe idade"/>
 			</b:column>
 			
 			<b:column>
@@ -88,7 +88,7 @@
 			
 			<b:column>
 				<h:outputLabel value="CEP:" />
-				<b:inputText value="#{pessoaBean.pessoa.cep}" pt:placeholder="Informe CEP">
+				<b:inputText value="#{pessoaBean.pessoa.cep}" pt:placeholder="Informe CEP" mask="99999-999">
 					<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}" render="logradouro complemento bairro localidade uf unidade ibge gia"/>
 				</b:inputText>
 				
@@ -138,12 +138,12 @@
 			
 			<b:column>
 				<h:outputLabel value="CPF:" />
-				<b:inputText value="#{pessoaBean.pessoa.cpf}" />
+				<b:inputText value="#{pessoaBean.pessoa.cpf}" pt:placeholder="Informe CPF" mask="999.999.999-99"/>
 			</b:column>
 			
 			<b:column>
 				<h:outputLabel value="Título Eleitor:" />
-				<b:inputText value="#{pessoaBean.pessoa.tituloEleitor}" />
+				<b:inputText value="#{pessoaBean.pessoa.tituloEleitor}" pt:placeholder="Informe Título Eleitor" mask="numeric"/>
 			</b:column>
 			
 			<b:column>
