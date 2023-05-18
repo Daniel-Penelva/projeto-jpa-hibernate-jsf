@@ -1,7 +1,9 @@
 package br.com.projetoJpaHibernateJsf.repository;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -12,6 +14,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
 import br.com.projetoJpaHibernateJsf.entidade.Estados;
+import br.com.projetoJpaHibernateJsf.entidade.Lancamento;
 import br.com.projetoJpaHibernateJsf.entidade.Pessoa;
 
 @Named
@@ -64,6 +67,69 @@ public class IDaoPessoaImpl implements IDaoPessoa, Serializable{
 		}
 				
 		return selectItems;
+	}
+
+
+	@Override
+	public List<Pessoa> relatorioPessoa(String nome, Date dataInicial, Date dataFinal) {
+		
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT p FROM Pessoa p ");
+		
+		//OBS. Tem que montar os sql de acordo com as condições
+		//Criando consulta por número da nota - OBS. !nome.isEmpty() - diferente de vazio
+		if(dataInicial == null && dataFinal == null && nome != null && !nome.isEmpty()) {
+			
+			// nome é uma string, logo tem que usar uma aspa simples
+			//o método trim() é para remover espaço
+			sql.append("WHERE UPPER(p.nome) LIKE '%").append(nome.trim().toUpperCase()).append("%'");
+			
+		  // Se existir apenas a data inicial
+		}else if(nome == null || (nome != null && nome.isEmpty()) && dataInicial != null && dataFinal == null) {
+			
+			String dataIniString = new SimpleDateFormat("yyyy-MM-dd").format(dataInicial);
+			
+			sql.append("WHERE p.dataNascimento >= '").append(dataIniString).append("'");
+			
+		  // Se existir apenas a data final	
+		} else if(nome == null || (nome != null && nome.isEmpty()) && dataInicial == null && dataFinal != null) {
+			
+			String dataFimString = new SimpleDateFormat("yyyy-MM-dd").format(dataFinal);
+			
+			sql.append("WHERE p.dataNascimento <= '").append(dataFimString).append("'");
+			
+		 // Se as duas datas forem informadas
+		}else if(nome == null || (nome != null && nome.isEmpty()) && dataInicial != null && dataFinal != null) {
+			
+			String dataIniString = new SimpleDateFormat("yyyy-MM-dd").format(dataInicial);
+			String dataFimString = new SimpleDateFormat("yyyy-MM-dd").format(dataFinal);
+			
+			sql.append("WHERE p.dataNascimento >= '").append(dataIniString).append("' ");
+			sql.append(" AND p.dataNascimento <= '").append(dataFimString).append("' ");
+			
+		  // Se todos os campos forem informados
+		} else if(nome != null && !nome.isEmpty() && dataInicial != null && dataFinal != null) {
+			
+			String dataIniString = new SimpleDateFormat("yyyy-MM-dd").format(dataInicial);
+			String dataFimString = new SimpleDateFormat("yyyy-MM-dd").format(dataFinal);
+			
+			sql.append("WHERE p.dataNascimento >= '").append(dataIniString).append("' ");
+			sql.append(" AND p.dataNascimento <= '").append(dataFimString).append("' ");
+			sql.append(" AND UPPER(p.nome) LIKE '%").append(nome.trim().toUpperCase()).append("%'");
+			
+		}
+		
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		
+		pessoas = entityManager.createQuery(sql.toString()).getResultList();
+		
+		transaction.commit();
+		
+		return pessoas;
 	}
 
 }

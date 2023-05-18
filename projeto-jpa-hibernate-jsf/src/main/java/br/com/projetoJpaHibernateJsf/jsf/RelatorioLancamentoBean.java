@@ -31,7 +31,7 @@ public class RelatorioLancamentoBean implements Serializable {
 	@Inject
 	private DaoGeneric<Lancamento> daoGeneric;
 
-	// Ação do botão
+	// Ação do botão - método que vai buscar os dados para imprimir os resultados do lançamento
 	public void buscarlancamento() {
 		// System.out.println("Chamou o botão buscar");
 		

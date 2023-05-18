@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui = "http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Tela de Relatório de Lançamento</title>
+	<link href="resources/estilo.css" rel="stylesheet"></link> 
+</h:head>
+<h:body>
+
+	<ui:include src="/menu.xhtml"/>
+	
+	<b:messages id="msg"/>
+
+	<b:form id="formPessoa">
+		<b:panelGrid columns="2">
+		
+			<b:column>
+				<h:outputLabel value="Data Inicial"/>
+				<b:datepicker locale="en" value="#{relatorioUsuarioBean.dataInicial}"/>
+			</b:column>
+			
+			<b:column>
+				<h:outputLabel value="Data Final"/>
+				<b:datepicker locale="en" value="#{relatorioUsuarioBean.dataFinal}"/>
+			</b:column>
+			
+			<b:column>
+				<h:outputLabel value="Nome"/>
+				<b:inputText value="#{relatorioUsuarioBean.nome}" />
+			</b:column>
+			
+		</b:panelGrid>
+		<b:commandButton value="Buscar" action="#{relatorioUsuarioBean.buscarUsuario}" look="primary" style="margin-left:12px;"/>	
+			
+	</b:form>
+	
+	<br />
+	<br />
+		
+	<!-- OBS. Capturar os atributos da entidade Lancamento  -->	
+	<b:form>
+		<b:dataTable value="#{relatorioUsuarioBean.pessoas}" var="p" border="3" pdf="true" excel="true">
+			<b:dataTableColumn value="#{p.id}" label="ID"/>
+			<b:dataTableColumn value="#{p.nome}" label="Nome"/>
+		</b:dataTable>
+	</b:form>
+</h:body>
+
+</html>
