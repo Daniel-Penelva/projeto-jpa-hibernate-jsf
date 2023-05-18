@@ -1,6 +1,7 @@
 package br.com.projetoJpaHibernateJsf.repository;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,6 +70,40 @@ public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 			// numeroNota é uma string, logo tem que usar uma aspa simples
 			//o método trim() é para remover espaço
 			sql.append("WHERE l.numeroNotaFiscal = '").append(numeroNota.trim()).append("'");
+			
+		  // Se existir apenas a data inicial
+		}else if(numeroNota == null || (numeroNota != null && numeroNota.isEmpty()) && dataInicial != null && dataFinal == null) {
+			
+			String dataIniString = new SimpleDateFormat("yyyy-MM-dd").format(dataInicial);
+			
+			sql.append("WHERE l.dataInicial >= '").append(dataIniString).append("'");
+			
+		  // Se existir apenas a data final	
+		} else if(numeroNota == null || (numeroNota != null && numeroNota.isEmpty()) && dataInicial == null && dataFinal != null) {
+			
+			String dataFimString = new SimpleDateFormat("yyyy-MM-dd").format(dataFinal);
+			
+			sql.append("WHERE l.dataFinal <= '").append(dataFimString).append("'");
+			
+		 // Se as duas datas forem informadas
+		}else if(numeroNota == null || (numeroNota != null && numeroNota.isEmpty()) && dataInicial != null && dataFinal != null) {
+			
+			String dataIniString = new SimpleDateFormat("yyyy-MM-dd").format(dataInicial);
+			String dataFimString = new SimpleDateFormat("yyyy-MM-dd").format(dataFinal);
+			
+			sql.append("WHERE l.dataInicial >= '").append(dataIniString).append("' ");
+			sql.append(" AND l.dataFinal <= '").append(dataFimString).append("' ");
+			
+		  // Se todos os campos forem informados
+		} else if(numeroNota != null && !numeroNota.isEmpty() && dataInicial != null && dataFinal != null) {
+			
+			String dataIniString = new SimpleDateFormat("yyyy-MM-dd").format(dataInicial);
+			String dataFimString = new SimpleDateFormat("yyyy-MM-dd").format(dataFinal);
+			
+			sql.append("WHERE l.dataInicial >= '").append(dataIniString).append("' ");
+			sql.append(" AND l.dataFinal <= '").append(dataFimString).append("' ");
+			sql.append(" AND l.numeroNotaFiscal = '").append(numeroNota.trim()).append("'");
+			
 		}
 		
 		EntityTransaction transaction = entityManager.getTransaction();
