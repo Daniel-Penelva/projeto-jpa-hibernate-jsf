@@ -137,6 +137,16 @@
 			</b:column>
 			
 			<b:column>
+				<h:outputLabel value="CPF:" />
+				<b:inputText value="#{pessoaBean.pessoa.cpf}" />
+			</b:column>
+			
+			<b:column>
+				<h:outputLabel value="Título Eleitor:" />
+				<b:inputText value="#{pessoaBean.pessoa.tituloEleitor}" />
+			</b:column>
+			
+			<b:column>
 				<h:outputLabel value="Perfil:" />
 				<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUser}"
 					required="false">

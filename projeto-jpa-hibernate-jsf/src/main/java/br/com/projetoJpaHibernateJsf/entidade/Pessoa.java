@@ -94,6 +94,12 @@ public class Pessoa implements Serializable {
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] fotoIconBase64Original;
+	
+	@CPF(message = "CPF inválido!")
+	private String cpf;
+	
+	@TituloEleitoral(message = "Título eleitor inválido!")
+	private String tituloEleitor;
 
 	public Long getId() {
 		return id;
@@ -318,6 +324,22 @@ public class Pessoa implements Serializable {
 
 	public void setFotoIconBase64Original(byte[] fotoIconBase64Original) {
 		this.fotoIconBase64Original = fotoIconBase64Original;
+	}
+	
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getTituloEleitor() {
+		return tituloEleitor;
+	}
+
+	public void setTituloEleitor(String tituloEleitor) {
+		this.tituloEleitor = tituloEleitor;
 	}
 
 	/*
